@@ -1,9 +1,3 @@
-Hi 👋 My name is Nguyễn Văn Phú
-===============================
-
-* 🌍  I'm based in Việt Nam
-* ✉️  You can contact me at [ngvphu235e@gmail.com](mailto:ngvphu235e@gmail.com)
-
 ### Skills
 
 
