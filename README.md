@@ -43,6 +43,12 @@
   <a href="https://github.com/torvalds/linux" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
     <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/linux.svg" alt="linux" />
   </a>
+  <a href="https://gnu.org/software/bash" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
+    <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/bash.svg" alt="bash" />
+  </a>
+  <a href="https://code.visualstudio.com" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
+    <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/vscode.svg" alt="vscode" />
+  </a>
 </p>
 
 <h2>Statistics</h2>
