@@ -22,25 +22,25 @@
 
 <h2 align="left">Skills:</h2>
 <p align="left">
-  <a href="https://github.com/naipret?tab=repositories&language=c" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
+  <a href="https://learncpp.com" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
     <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/c.svg" alt="c" />
   </a>
-  <a href="https://github.com/naipret?tab=repositories&language=c%2B%2B" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
+  <a href="https://learncpp.com" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
     <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/cpp.svg" alt="cpp" />
   </a>
-  <a href="https://github.com/naipret?tab=repositories&language=python" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
+  <a href="https://python.org" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
     <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/python.svg" alt="python" />
   </a>
-  <a href="https://github.com/naipret?tab=repositories&language=html" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
+  <a href="https://w3schools.com/html" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
     <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/html.svg" alt="html" />
   </a>
-  <a href="https://github.com/naipret?tab=repositories&language=css" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
+  <a href="https://w3schools.com/css" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
     <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/css.svg" alt="css" />
   </a>
-  <a href="https://github.com/naipret?tab=repositories" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
+  <a href="https://git-scm.com" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
     <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/git.svg" alt="git" />
   </a>
-  <a href="https://github.com/torvalds/linux" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
+  <a href="https://linux.org" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
     <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/linux.svg" alt="linux" />
   </a>
   <a href="https://gnu.org/software/bash" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
