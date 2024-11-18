@@ -1,7 +1,8 @@
 <h1 align="center">Hi 👋, I'm naipret</h1>
 <h3 align="center">Aspiring coder, always learning :D</h3>
 
-- 🌍 I'm based in Vietnam - ✉️ You can contact me at [ngvphu235e@gmail.com](mailto:ngvphu235e@gmail.com)
+- 🌍 I'm based in Vietnam
+- ✉️ You can contact me at [ngvphu235e@gmail.com](mailto:ngvphu235e@gmail.com)
 
 <h2 align="left">Socials:</h2>
 <p align="left">
