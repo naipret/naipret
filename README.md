@@ -53,10 +53,10 @@
 
 <h2>Statistics</h2>
 <p align="center">
-  <a href="https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file#github-stats-card" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
-    <img height="200" align="center" src="https://github-readme-stats.vercel.app/api?username=naipret&show_icons=true&hide_border=true&theme=transparent" />
+  <a href="https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file#github-stats-card" target="_blank" rel="noreferrer">
+    <img height="200" align="center" src="https://github-readme-stats.vercel.app/api?username=naipret&count_private=true&show_icons=true&hide_border=true&theme=transparent" alt="naipret's GitHub stats" />
   </a>
-  <a href="https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file#top-languages-card" target="_blank" rel="noreferrer" style="text-decoration: none; display: inline-block">
-    <img height="200" align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=naipret&langs_count=8&layout=compact&hide_border=true&theme=transparent" />
+  <a href="https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file#top-languages-card" target="_blank" rel="noreferrer">
+    <img height="200" align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=naipret&count_private=true&langs_count=8&layout=compact&hide_border=true&theme=transparent" alt="Top Languages" />
   </a>
 </p>
