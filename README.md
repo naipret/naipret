@@ -47,9 +47,9 @@
 <h2>Statistics</h2>
 <p align="center">
   <a href="https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file#github-stats-card" target="_blank" style="text-decoration: none; display: inline-block">
-    <img height="200" align="center" src="https://github-readme-stats.vercel.app/api?username=naipret&show_icons=true&hide_border=true&theme=dark#gh-dark-mode-only" />
+    <img height="200" align="center" src="https://github-readme-stats.vercel.app/api?username=naipret&show_icons=true&hide_border=true&theme=transparent" />
   </a>
   <a href="https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file#top-languages-card" target="_blank" style="text-decoration: none; display: inline-block">
-    <img height="200" align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=naipret&langs_count=8&layout=compact&hide_border=true&theme=dark#gh-dark-mode-only" />
+    <img height="200" align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=naipret&langs_count=8&layout=compact&hide_border=true&theme=transparent" />
   </a>
 </p>
