@@ -23,9 +23,6 @@
 <h2 align="left">Skills:</h2>
 <p align="left">
   <a href="https://learncpp.com" target="_blank" rel="noreferrer">
-    <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/c.svg" alt="c" />
-  </a>
-  <a href="https://learncpp.com" target="_blank" rel="noreferrer">
     <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/cpp.svg" alt="cpp" />
   </a>
   <a href="https://python.org" target="_blank" rel="noreferrer">
