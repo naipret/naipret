@@ -46,6 +46,12 @@
   <a href="https://code.visualstudio.com" target="_blank" rel="noreferrer">
     <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/vscode.svg" alt="vscode" />
   </a>
+  <a href="https://gnu.org/software/make" target="_blank" rel="noreferrer">
+    <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/makefile.svg" alt="makefile" />
+  </a>
+  <a href="https://cmake.org" target="_blank" rel="noreferrer">
+    <img src="https://raw.githubusercontent.com/naipret/naipret/master/src/icon/cmake.svg" alt="cmake" />
+  </a>
 </p>
 
 <h2>Statistics</h2>
