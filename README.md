@@ -7,38 +7,17 @@
 [![youtube](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/youtube.svg)](https://youtube.com/@naipret)
 [![discord](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/discord.svg)](https://discord.com/invite/ABmNTDpMeJ)
 
-## Skills:
+### Skills:
 
-### Programming Language
-
-![c++](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/programming-language/cpp.svg)
-![python](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/programming-language/python.svg)
-
-### Frontend Development
-
-![html](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/frontend-development/html.svg)
-![css](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/frontend-development/css.svg)
-
-### VCS
-
-![git](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/vcs/git.svg)
-
-### OS
-
-![linux](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/os/linux.svg)
-
-### IDE
-
-![vscode](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/ide/vscode.svg)
-
-### Build Tool
-
-![makefile](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/build-tool/makefile.svg)
-![cmake](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/build-tool/cmake.svg)
-
-### Other
-
-![bash](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/bash.svg)
+| Category                 | Skills                                                                                                                                                                                                              |
+| :----------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Programming Language** | ![c++](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/programming-language/cpp.svg) ![python](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/programming-language/python.svg) |
+| **Frontend Development** | ![html](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/frontend-development/html.svg) ![css](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/frontend-development/css.svg)     |
+| **VCS**                  | ![git](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/vcs/git.svg)                                                                                                                               |
+| **OS**                   | ![linux](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/os/linux.svg)                                                                                                                            |
+| **IDE**                  | ![vscode](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/ide/vscode.svg)                                                                                                                         |
+| **Build Tool**           | ![makefile](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/build-tool/makefile.svg) ![cmake](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/build-tool/cmake.svg)             |
+| **Other**                | ![bash](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/bash.svg)                                                                                                                                 |
 
 ## Statistics:
 
