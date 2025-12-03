@@ -2,7 +2,7 @@
 
 ## Connect with me
 
-[![gmail](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/gmail.svg)](mailto:naipret@gmail.com)
+[![gmail](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/gmail.svg)](mailto:ngvphu235e@gmail.com)
 [![github](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/github.svg)](https://github.com/naipret)
 [![facebook](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/facebook.svg)](https://facebook.com/naipret)
 [![youtube](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/youtube.svg)](https://youtube.com/@naipret)
