@@ -20,11 +20,6 @@
 | **Build Tool**           | ![makefile](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/build-tool/makefile.svg) ![cmake](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/build-tool/cmake.svg)                                                                                                                      |
 | **Other**                | ![bash](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/bash.svg)                                                                                                                                                                                                                                          |
 
-## Statistics
-
-[![naipret's github stats](https://github-readme-stats.vercel.app/api?username=naipret&count_private=true&include_all_commits=true&show_icons=true&hide_border=true&theme=transparent)](https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file#github-stats-card)
-[![top languages](https://github-readme-stats.vercel.app/api/top-langs/?username=naipret&count_private=true&langs_count=8&layout=compact&hide_border=true&theme=transparent)](https://github.com/anuraghazra/github-readme-stats?tab=readme-ov-file#top-languages-card)
-
 ## Buy me a coffee
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/S6S61DSEGS)
