@@ -1,57 +1,57 @@
-## About
+# Nguyen Van Phu (naipret)
 
----
-
-## Education
-
----
-
-## Project
+Software Engineering Student @ FPT University | Member @ F-Code Club
+Passionate about Software Architecture, Systems Programming, Algorithm Design, and Automation Tooling.
 
 ---
 
 ## Stack
 
 | Category | Technologies | Proficiency | Status |
-| :---- | :---- | :---- | :---- |
-| Programming Language | C | Intermediate | Deepening |
+| :--- | :--- | :--- | :--- |
+| **Programming Language** | C | Intermediate | Deepening |
 | | C++ | Upper-Intermediate | Deepening |
 | | Modern C++ | Intermediate | Deepening |
 | | Java | Beginner | Learning |
-| | Modern Java | | Planned |
-| | JavaScript | | Planned |
-| | TypeScript | | Planned |
-| Frontend | HTML | Intermediate | |
+| | Python | Intermediate | Deepening |
+| | JavaScript | - | Learning |
+| | TypeScript | - | Planned |
+| **Frontend** | HTML | Intermediate | - |
 | | CSS | Beginner | Learning |
-| | SCSS | | Planned |
-| Frontend Framework | | | |
-| Backend | | | |
-| Backend Framework | | | |
-| API | | | |
-| Database | | | |
-| DevOps | Linux | Intermediate | Deepening |
-| | Git | Intermediate | |
+| | SCSS / Tailwind | - | Planned |
+| **Backend & Architecture** | Layered MVC / GoF Patterns | Intermediate | - |
+| | Spring Boot | Beginner | Learning |
+| | RESTful APIs | Beginner | Learning |
+| **Databases** | | Beginner | Learning |
+| **DevOps & OS** | Linux | Intermediate | Deepening |
+| | Git & GitHub | Intermediate | - |
 | | GitHub Actions | Beginner | Learning |
 | | Docker | Beginner | Learning |
-| | Kubernetes | | Planned |
-| Build Tool | GNU Make | Intermediate | |
+| | Kubernetes | - | Planned |
+| **Build & Tooling** | GNU Make | Intermediate | - |
 | | CMake | Intermediate | Deepening |
 | | Maven | Beginner | Learning |
-| | Gradle | | Planned |
-| Test Tool | | | |
+| | Gradle | - | Planned |
+| **Research & Docs** | LaTeX | Intermediate | - |
 
 ---
 
-## Stat
+## Overview
 
-<!-- ## Buy me a coffee
+<!-- START_SECTION:stats -->
+```text
+Public Repositories : 12
+Community Stars     : 2
+Community Forks     : 2
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/S6S61DSEGS)
+Top Languages:
+C          [██████████░░░░░░░░░░]  49.8% (292.1 KB)
+Java       [█████░░░░░░░░░░░░░░░]  24.3% (142.4 KB)
+HTML       [██░░░░░░░░░░░░░░░░░░]  11.1% (65.2 KB)
+JavaScript [█░░░░░░░░░░░░░░░░░░░]   6.0% (35.4 KB)
+CSS        [█░░░░░░░░░░░░░░░░░░░]   3.3% (19.3 KB)
+C++        [█░░░░░░░░░░░░░░░░░░░]   2.8% (16.6 KB)
 
-## Connect with me
-
-[![gmail](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/gmail.svg)](mailto:ngvphu235e@gmail.com)
-[![github](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/github.svg)](https://github.com/naipret)
-[![facebook](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/facebook.svg)](https://facebook.com/naipret)
-[![youtube](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/youtube.svg)](https://youtube.com/@naipret)
-[![discord](https://raw.githubusercontent.com/naipret/naipret/master/src/icon/social/discord.svg)](https://discord.com/invite/ABmNTDpMeJ) -->
+* Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-08-20 09:11 UTC)
+```
+<!-- END_SECTION:stats -->
