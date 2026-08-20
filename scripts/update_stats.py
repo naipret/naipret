@@ -45,8 +45,7 @@ def format_bytes(b: int) -> str:
 def render_progress_bar(percentage: float, width: int = BAR_WIDTH) -> str:
     filled_len = int(round(width * percentage / 100.0))
     filled_len = max(0, min(width, filled_len))
-    bar = "█" * filled_len + "░" * (width - filled_len)
-    return f"[{bar}]"
+    return "█" * filled_len + "░" * (width - filled_len)
 
 
 def generate_stats_block(repos: list, token: str | None) -> str:
@@ -74,27 +73,26 @@ def generate_stats_block(repos: list, token: str | None) -> str:
     now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
     lines = []
-    lines.append("```text")
-    lines.append(f"Public Repositories : {total_public}")
-    lines.append(f"Community Stars     : {total_stars}")
-    lines.append(f"Community Forks     : {total_forks}")
+    lines.append("| Metric | Value |")
+    lines.append("| :--- | :---: |")
+    lines.append(f"| **Public Repositories** | {total_public} |")
+    lines.append(f"| **Community Stars** | {total_stars} |")
+    lines.append(f"| **Community Forks** | {total_forks} |")
     lines.append("")
-    lines.append("Top Languages:")
+    lines.append("### Top Languages")
+    lines.append("")
+    lines.append("| Language | Distribution | Percentage |")
+    lines.append("| :--- | :--- | :---: |")
 
-    # Top 6 languages or all if less
-    top_langs = sorted_langs[:6]
-    max_name_len = max((len(lang) for lang, _ in top_langs), default=10)
-    max_name_len = max(max_name_len, 10)
-
+    # Top 10 languages or all if less
+    top_langs = sorted_langs[:10]
     for lang, b in top_langs:
         pct = (b / total_bytes * 100) if total_bytes > 0 else 0.0
         bar = render_progress_bar(pct, BAR_WIDTH)
-        size_str = format_bytes(b)
-        lines.append(f"{lang:<{max_name_len}} {bar} {pct:>5.1f}% ({size_str})")
+        lines.append(f"| **{lang}** | `{bar}` | {pct:.1f}% |")
 
     lines.append("")
-    lines.append(f"* Automated synchronization via custom GitHub Actions workflow (Last updated: {now_utc})")
-    lines.append("```")
+    lines.append(f"<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: {now_utc})*</sub>")
 
     return "\n".join(lines)
 
