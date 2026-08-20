@@ -10,7 +10,7 @@ Passionate about Software Architecture, Systems Programming, Algorithm Design, a
 
 | Category | Technologies | Proficiency | Status |
 | :--- | :--- | :--- | :--- |
-| **Programming<br>Language** | C | Intermediate | Deepening |
+| **Programming Language** | C | Intermediate | Deepening |
 | | C++ | Upper-Intermediate | Deepening |
 | | Modern C++ | Intermediate | Deepening |
 | | Java | Beginner | Learning |
@@ -39,19 +39,26 @@ Passionate about Software Architecture, Systems Programming, Algorithm Design, a
 ## Overview
 
 <!-- START_SECTION:stats -->
-```text
-Public Repositories : 12
-Community Stars     : 2
-Community Forks     : 2
+| Metric | Value |
+| :--- | :---: |
+| **Public Repositories** | 12 |
+| **Community Stars** | 2 |
+| **Community Forks** | 2 |
 
-Top Languages:
-C          [██████████░░░░░░░░░░]  49.4% (292.1 KB)
-Java       [█████░░░░░░░░░░░░░░░]  24.1% (142.4 KB)
-HTML       [██░░░░░░░░░░░░░░░░░░]  11.0% (65.2 KB)
-JavaScript [█░░░░░░░░░░░░░░░░░░░]   6.0% (35.4 KB)
-CSS        [█░░░░░░░░░░░░░░░░░░░]   3.3% (19.3 KB)
-C++        [█░░░░░░░░░░░░░░░░░░░]   2.8% (16.6 KB)
+### Top Languages
 
-* Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-08-20 11:37 UTC)
-```
+| Language | Distribution | Percentage |
+| :--- | :--- | :---: |
+| **C** | `██████████░░░░░░░░░░` | 49.4% |
+| **Java** | `█████░░░░░░░░░░░░░░░` | 24.1% |
+| **HTML** | `██░░░░░░░░░░░░░░░░░░` | 11.0% |
+| **JavaScript** | `█░░░░░░░░░░░░░░░░░░░` | 6.0% |
+| **CSS** | `█░░░░░░░░░░░░░░░░░░░` | 3.3% |
+| **C++** | `█░░░░░░░░░░░░░░░░░░░` | 2.8% |
+| **Python** | `░░░░░░░░░░░░░░░░░░░░` | 1.5% |
+| **Makefile** | `░░░░░░░░░░░░░░░░░░░░` | 0.7% |
+| **Batchfile** | `░░░░░░░░░░░░░░░░░░░░` | 0.5% |
+| **Shell** | `░░░░░░░░░░░░░░░░░░░░` | 0.5% |
+
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-08-20 11:45 UTC)*</sub>
 <!-- END_SECTION:stats -->
