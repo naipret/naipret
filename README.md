@@ -49,16 +49,16 @@ Passionate about Software Architecture, Systems Programming, Algorithm Design, a
 
 | Language | Distribution | Percentage |
 | :--- | :--- | :---: |
-| **C** | `██████████░░░░░░░░░░` | 49.6% |
-| **Java** | `█████░░░░░░░░░░░░░░░` | 24.2% |
-| **HTML** | `██░░░░░░░░░░░░░░░░░░` | 11.0% |
-| **JavaScript** | `█░░░░░░░░░░░░░░░░░░░` | 6.1% |
-| **CSS** | `█░░░░░░░░░░░░░░░░░░░` | 3.0% |
-| **C++** | `█░░░░░░░░░░░░░░░░░░░` | 2.8% |
-| **Python** | `░░░░░░░░░░░░░░░░░░░░` | 1.5% |
-| **Makefile** | `░░░░░░░░░░░░░░░░░░░░` | 0.7% |
+| **C** | `█████████░░░░░░░░░░░` | 45.9% |
+| **Java** | `██████░░░░░░░░░░░░░░` | 29.8% |
+| **HTML** | `██░░░░░░░░░░░░░░░░░░` | 10.1% |
+| **JavaScript** | `█░░░░░░░░░░░░░░░░░░░` | 5.6% |
+| **CSS** | `█░░░░░░░░░░░░░░░░░░░` | 2.7% |
+| **C++** | `█░░░░░░░░░░░░░░░░░░░` | 2.6% |
+| **Python** | `░░░░░░░░░░░░░░░░░░░░` | 1.4% |
+| **Makefile** | `░░░░░░░░░░░░░░░░░░░░` | 0.6% |
 | **Batchfile** | `░░░░░░░░░░░░░░░░░░░░` | 0.5% |
 | **Shell** | `░░░░░░░░░░░░░░░░░░░░` | 0.5% |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-08-24 01:26 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-08-25 01:24 UTC)*</sub>
 <!-- END_SECTION:stats -->
