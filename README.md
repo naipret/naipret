@@ -12,28 +12,28 @@ Passionate about Software Architecture, Systems Programming, Algorithm Design, a
 | Category | Technologies | Proficiency | Status |
 | :--- | :--- | :--- | :--- |
 | **Programming Language** | C | Intermediate | Deepening |
-| | C++ | Upper-Intermediate | Deepening |
+| | C++ | Intermediate | Deepening |
 | | Modern C++ | Intermediate | Deepening |
 | | Java | Beginner | Learning |
 | | Python | Intermediate | Deepening |
-| | JavaScript | - | Learning |
+| | JavaScript | Beginner | Learning |
 | | TypeScript | - | Planned |
-| **Frontend** | HTML | Intermediate | - |
+| **Frontend** | HTML | Intermediate | Deepening |
 | | CSS | Beginner | Learning |
 | | SCSS / Tailwind | - | Planned |
 | **Backend** | Spring Boot | Beginner | Learning |
 | | RESTful APIs | Beginner | Learning |
-| **Databases** | | Beginner | Learning |
+| **Databases** | - | Beginner | Learning |
 | **DevOps** | Linux | Intermediate | Deepening |
 | | Git & GitHub | Intermediate | - |
 | | GitHub Actions | Beginner | Learning |
 | | Docker | Beginner | Learning |
 | | Kubernetes | - | Planned |
 | **Build** | GNU Make | Intermediate | - |
-| | CMake | Intermediate | Deepening |
+| | CMake | Intermediate | - |
 | | Maven | Beginner | Learning |
 | | Gradle | - | Planned |
-| **Research** | LaTeX | Intermediate | - |
+| **Research** | LaTeX | Beginner | Learning |
 
 ---
 
