@@ -1,6 +1,7 @@
 ## About
 
-Software Engineering Student @ FPT University | Member @ F-Code Club
+Software Engineering Student @ FPT University\
+Backend & DevOps Crew Member @ F-Code Club
 
 Passionate about Software Architecture, Systems Programming, Algorithm Design, and Automation Tooling.
 
