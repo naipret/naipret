@@ -6,6 +6,7 @@ import urllib.request
 from datetime import datetime, timezone
 
 USERNAME = "naipret"
+ORGANIZATIONS = ["naf-studio"]
 README_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "README.md")
 START_MARKER = "<!-- START_SECTION:stats -->"
 END_MARKER = "<!-- END_SECTION:stats -->"
@@ -136,12 +137,38 @@ def main():
         except Exception:
             pass
 
-    repos_url = f"https://api.github.com/users/{USERNAME}/repos?per_page=100&type=owner"
-    print(f"Fetching repositories from {repos_url}...")
-    repos = make_github_request(repos_url, token)
+    repos = []
+    seen_repo_ids = set()
 
-    if not isinstance(repos, list):
-        print("Failed to fetch repository list.", file=sys.stderr)
+    # Fetch user repos
+    user_repos_url = f"https://api.github.com/users/{USERNAME}/repos?per_page=100&type=owner"
+    print(f"Fetching user repositories from {user_repos_url}...")
+    user_repos = make_github_request(user_repos_url, token)
+    if isinstance(user_repos, list):
+        for r in user_repos:
+            repo_id = r.get("id")
+            if repo_id and repo_id not in seen_repo_ids:
+                seen_repo_ids.add(repo_id)
+                repos.append(r)
+    else:
+        print(f"Warning: Failed to fetch repositories for user {USERNAME}.", file=sys.stderr)
+
+    # Fetch org repos
+    for org in ORGANIZATIONS:
+        org_repos_url = f"https://api.github.com/orgs/{org}/repos?per_page=100"
+        print(f"Fetching organization repositories from {org_repos_url}...")
+        org_repos = make_github_request(org_repos_url, token)
+        if isinstance(org_repos, list):
+            for r in org_repos:
+                repo_id = r.get("id")
+                if repo_id and repo_id not in seen_repo_ids:
+                    seen_repo_ids.add(repo_id)
+                    repos.append(r)
+        else:
+            print(f"Warning: Failed to fetch repositories for org {org}.", file=sys.stderr)
+
+    if not repos:
+        print("Failed to fetch any repositories.", file=sys.stderr)
         sys.exit(1)
 
     stats_content = generate_stats_block(repos, token)
