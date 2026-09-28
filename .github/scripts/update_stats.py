@@ -311,6 +311,10 @@ def update_stack_table(readme: str, language_bytes: dict[str, int]) -> str:
 
         new_table_lines.append(f"| {cat_col} | {tech} | {prof} | {stat} | {dist_col} | {pct_col} |")
 
+    now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    new_table_lines.append("")
+    new_table_lines.append(f"<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: {now_utc})*</sub>")
+
     new_table_str = "\n".join(new_table_lines)
 
     if has_markers:
