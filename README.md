@@ -8,31 +8,33 @@ Creator & Maintainer @ NAF Studio
 
 ## Stack
 
-| Category | Technologies | Proficiency | Status |
-| :--- | :--- | :--- | :--- |
-| **Programming Language** | C | Intermediate | Deepening |
-| | C++ | Intermediate | Deepening |
-| | Modern C++ | Intermediate | Deepening |
-| | Java | Beginner | Learning |
-| | Python | Intermediate | Deepening |
-| | JavaScript | Beginner | Learning |
-| | TypeScript | - | Planned |
-| **Frontend** | HTML | Intermediate | Deepening |
-| | CSS | Beginner | Learning |
-| | SCSS / Tailwind | - | Planned |
-| **Backend** | Spring Boot | Beginner | Learning |
-| | RESTful APIs | Beginner | Learning |
-| **Databases** | - | Beginner | Learning |
-| **DevOps** | Linux | Intermediate | Deepening |
-| | Git & GitHub | Intermediate | - |
-| | GitHub Actions | Beginner | Learning |
-| | Docker | Beginner | Learning |
-| | Kubernetes | - | Planned |
-| **Build** | GNU Make | Intermediate | - |
-| | CMake | Intermediate | - |
-| | Maven | Beginner | Learning |
-| | Gradle | - | Planned |
-| **Research** | LaTeX | Beginner | Learning |
+<!-- START_SECTION:stack -->
+| Category | Technologies | Proficiency | Status | Distribution | Percentage |
+| :--- | :--- | :--- | :--- | :--- | :---: |
+| **Programming Language** | C | Intermediate | Deepening | `███░░░░░░░░░` | 25.3% |
+|  | C++ | Intermediate | Deepening | `██░░░░░░░░░░` | 13.8% |
+|  | Modern C++ | Intermediate | Deepening | `██░░░░░░░░░░` | 13.8% |
+|  | Java | Beginner | Learning | `███░░░░░░░░░` | 22.3% |
+|  | Python | Intermediate | Deepening | `█░░░░░░░░░░░` | 7.0% |
+|  | JavaScript | Beginner | Learning | `█░░░░░░░░░░░` | 2.6% |
+|  | TypeScript | - | Planned | - | - |
+| **Frontend** | HTML | Intermediate | Deepening | `█░░░░░░░░░░░` | 6.2% |
+|  | CSS | Beginner | Learning | `█░░░░░░░░░░░` | 1.5% |
+|  | SCSS / Tailwind | - | Planned | `█░░░░░░░░░░░` | 1.5% |
+| **Backend** | Spring Boot | Beginner | Learning | - | - |
+|  | RESTful APIs | Beginner | Learning | - | - |
+| **Databases** | - | Beginner | Learning | - | - |
+| **DevOps** | Linux | Intermediate | Deepening | - | - |
+|  | Git & GitHub | Intermediate | - | - | - |
+|  | GitHub Actions | Beginner | Learning | - | - |
+|  | Docker | Beginner | Learning | `█░░░░░░░░░░░` | 0.1% |
+|  | Kubernetes | - | Planned | - | - |
+| **Build** | GNU Make | Intermediate | - | `█░░░░░░░░░░░` | 0.4% |
+|  | CMake | Intermediate | - | - | - |
+|  | Maven | Beginner | Learning | - | - |
+|  | Gradle | - | Planned | - | - |
+| **Research** | LaTeX | Beginner | Learning | `█░░░░░░░░░░░` | 10.7% |
+<!-- END_SECTION:stack -->
 
 ---
 
@@ -40,33 +42,21 @@ Creator & Maintainer @ NAF Studio
 
 <!-- START_SECTION:stats -->
 ### Activity
-- Commits: 1,707
+- Commits: 2,073
 - Pull requests opened: 18
 - Pull requests reviewed: 7
 - Issues opened: 19
-- Issue comments: 27
+- Issue comments: 28
 - Current commit streak: 1 days
 - Best commit streak: 6 days
 
 ### Repositories & Community
 - Organizations: naf-studio
 - Public repositories: 16
-- Private repositories: 0
+- Private repositories: 13
 - Community stars: 2
 - Community forks: 3
 - Sponsors: 0
 
-### Top Languages
-- Java:        `█████████░░░░░░░░░░░`    42.9%
-- C:           `████████░░░░░░░░░░░░`    37.8%
-- HTML:        `██░░░░░░░░░░░░░░░░░░`     8.4%
-- JavaScript:  `█░░░░░░░░░░░░░░░░░░░`     4.6%
-- CSS:         `░░░░░░░░░░░░░░░░░░░░`     2.3%
-- C++:         `░░░░░░░░░░░░░░░░░░░░`     2.1%
-- Makefile:    `░░░░░░░░░░░░░░░░░░░░`     0.5%
-- Python:      `░░░░░░░░░░░░░░░░░░░░`     0.5%
-- Batchfile:   `░░░░░░░░░░░░░░░░░░░░`     0.4%
-- Shell:       `░░░░░░░░░░░░░░░░░░░░`     0.4%
-
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 07:37 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 07:52 UTC)*</sub>
 <!-- END_SECTION:stats -->
