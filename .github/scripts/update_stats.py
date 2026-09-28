@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 
 USERNAME = "naipret"
 ORGANIZATIONS = ["naf-studio"]
-README_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "README.md")
+README_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "README.md")
 START_MARKER = "<!-- START_SECTION:stats -->"
 END_MARKER = "<!-- END_SECTION:stats -->"
 BAR_WIDTH = 20

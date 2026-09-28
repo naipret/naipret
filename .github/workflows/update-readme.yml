@@ -8,7 +8,7 @@ on:
     branches:
       - main
     paths:
-      - 'scripts/**'
+      - '.github/scripts/**'
       - '.github/workflows/update-readme.yml'
 
 permissions:
@@ -31,7 +31,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python scripts/update_stats.py
+          python .github/scripts/update_stats.py
 
       - name: Commit and Push Changes
         run: |
