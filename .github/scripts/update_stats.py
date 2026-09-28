@@ -18,17 +18,17 @@ BAR_WIDTH = 12
 TECH_LANG_MAP = {
     "C": ["C"],
     "C++": ["C++"],
-    "Modern C++": ["C++"],
     "Java": ["Java"],
     "Python": ["Python"],
     "JavaScript": ["JavaScript"],
     "TypeScript": ["TypeScript"],
     "HTML": ["HTML"],
     "CSS": ["CSS"],
-    "SCSS / Tailwind": ["SCSS", "CSS"],
+    "Tailwind": ["CSS"],
     "LaTeX": ["TeX", "LaTeX"],
     "GNU Make": ["Makefile"],
     "CMake": ["CMake"],
+    "Maven": ["Maven POM", "XML"],
     "Docker": ["Dockerfile"],
     "Shell": ["Shell"],
     "Batchfile": ["Batchfile"],
@@ -264,19 +264,18 @@ def update_stack_table(readme: str, language_bytes: dict[str, int]) -> str:
     base_rows = [
         ("Programming Language", "C", "Intermediate", "Deepening"),
         ("", "C++", "Intermediate", "Deepening"),
-        ("", "Modern C++", "Intermediate", "Deepening"),
         ("", "Java", "Beginner", "Learning"),
         ("", "Python", "Intermediate", "Deepening"),
         ("", "JavaScript", "Beginner", "Learning"),
         ("", "TypeScript", "-", "Planned"),
         ("Frontend", "HTML", "Intermediate", "Deepening"),
         ("", "CSS", "Beginner", "Learning"),
-        ("", "SCSS / Tailwind", "-", "Planned"),
+        ("", "Tailwind", "-", "Planned"),
         ("Backend", "Spring Boot", "Beginner", "Learning"),
-        ("", "RESTful APIs", "Beginner", "Learning"),
         ("Databases", "-", "Beginner", "Learning"),
         ("DevOps", "Linux", "Intermediate", "Deepening"),
-        ("", "Git & GitHub", "Intermediate", "-"),
+        ("", "Git", "Intermediate", "-"),
+        ("", "GitHub", "Intermediate", "-"),
         ("", "GitHub Actions", "Beginner", "Learning"),
         ("", "Docker", "Beginner", "Learning"),
         ("", "Kubernetes", "-", "Planned"),
@@ -295,7 +294,7 @@ def update_stack_table(readme: str, language_bytes: dict[str, int]) -> str:
     for cat, tech, prof, stat in base_rows:
         cat_col = f"**{cat}**" if cat else ""
         mapped_langs = TECH_LANG_MAP.get(tech)
-        
+
         if mapped_langs and total_bytes > 0:
             tech_bytes = sum(language_bytes.get(l, 0) for l in mapped_langs)
             pct = (tech_bytes / total_bytes * 100) if tech_bytes > 0 else 0.0
