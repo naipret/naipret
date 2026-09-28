@@ -10,7 +10,29 @@ ORGANIZATIONS = ["naf-studio"]
 README_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "README.md")
 START_MARKER = "<!-- START_SECTION:stats -->"
 END_MARKER = "<!-- END_SECTION:stats -->"
-BAR_WIDTH = 20
+STACK_START_MARKER = "<!-- START_SECTION:stack -->"
+STACK_END_MARKER = "<!-- END_SECTION:stack -->"
+BAR_WIDTH = 12
+
+# Mapping from Stack Technology name to GitHub Language name(s)
+TECH_LANG_MAP = {
+    "C": ["C"],
+    "C++": ["C++"],
+    "Modern C++": ["C++"],
+    "Java": ["Java"],
+    "Python": ["Python"],
+    "JavaScript": ["JavaScript"],
+    "TypeScript": ["TypeScript"],
+    "HTML": ["HTML"],
+    "CSS": ["CSS"],
+    "SCSS / Tailwind": ["SCSS", "CSS"],
+    "LaTeX": ["TeX", "LaTeX"],
+    "GNU Make": ["Makefile"],
+    "CMake": ["CMake"],
+    "Docker": ["Dockerfile"],
+    "Shell": ["Shell"],
+    "Batchfile": ["Batchfile"],
+}
 
 
 def make_github_request(url: str, token: str | None = None, data: dict | None = None):
@@ -79,7 +101,6 @@ def fetch_graphql_data(token: str | None) -> dict:
 
 
 def calculate_commit_streaks(weeks: list) -> tuple[int, int]:
-    # Flatten days sorted by date
     days = []
     for w in weeks:
         for d in w.get("contributionDays", []):
@@ -88,9 +109,7 @@ def calculate_commit_streaks(weeks: list) -> tuple[int, int]:
     days.sort(key=lambda x: x[0])
 
     best_streak = 0
-    current_streak = 0
     temp_streak = 0
-
     today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
     for date, count in days:
@@ -101,25 +120,19 @@ def calculate_commit_streaks(weeks: list) -> tuple[int, int]:
         else:
             temp_streak = 0
 
-    # Calculate current streak ending today or yesterday
+    current_streak = 0
     if days:
-        active_days = {d: c for d, c in days}
-        # Check from last day backwards
-        curr = 0
-        # iterate in reverse
         reversed_days = list(reversed(days))
-        # if today has 0, streak might still be alive if yesterday had > 0
         first = reversed_days[0]
         start_idx = 0
         if first[0] == today_str and first[1] == 0:
-            start_idx = 1  # check starting from yesterday
+            start_idx = 1
 
         for i in range(start_idx, len(reversed_days)):
             if reversed_days[i][1] > 0:
-                curr += 1
+                current_streak += 1
             else:
                 break
-        current_streak = curr
 
     return current_streak, best_streak
 
@@ -141,13 +154,14 @@ def fetch_total_commits(token: str | None, fallback_count: int) -> int:
 
 
 def render_progress_bar(percentage: float, width: int = BAR_WIDTH) -> str:
+    if percentage <= 0:
+        return "░" * width
     filled_len = int(round(width * percentage / 100.0))
-    filled_len = max(0, min(width, filled_len))
+    filled_len = max(1 if percentage > 0.05 else 0, min(width, filled_len))
     return "█" * filled_len + "░" * (width - filled_len)
 
 
 def generate_stats_block(repos: list, token: str | None) -> str:
-    # Repositories counts
     public_repos = [r for r in repos if not r.get("private", False)]
     private_repos = [r for r in repos if r.get("private", False)]
 
@@ -184,28 +198,6 @@ def generate_stats_block(repos: list, token: str | None) -> str:
     # Sponsors
     sponsors_count = graphql_data.get("sponsorshipsAsMaintainer", {}).get("totalCount", 0)
 
-    # Languages computation
-    language_bytes = {}
-    print(f"Fetching language statistics for {len(repos)} repositories...")
-    for repo in repos:
-        # Avoid forks for personal language statistics
-        if repo.get("fork", False):
-            continue
-        lang_url = repo.get("languages_url")
-        if not lang_url:
-            continue
-        langs = make_github_request(lang_url, token)
-        if isinstance(langs, dict):
-            for lang, count in langs.items():
-                language_bytes[lang] = language_bytes.get(lang, 0) + count
-
-    total_bytes = sum(language_bytes.values())
-    sorted_langs = sorted(language_bytes.items(), key=lambda x: x[1], reverse=True)
-
-    # Top 10 languages
-    top_langs = sorted_langs[:10]
-    max_lang_len = max((len(lang) for lang, _ in top_langs), default=10)
-
     now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
     lines = []
@@ -226,21 +218,117 @@ def generate_stats_block(repos: list, token: str | None) -> str:
     lines.append(f"- Community forks: {total_forks}")
     lines.append(f"- Sponsors: {sponsors_count}")
     lines.append("")
-    lines.append("### Top Languages")
-    for lang, b in top_langs:
-        pct = (b / total_bytes * 100) if total_bytes > 0 else 0.0
-        bar = render_progress_bar(pct, BAR_WIDTH)
-        # Tabbed into 3 columns: Name, bar, percentage
-        lang_padded = f"{lang}:".ljust(max_lang_len + 2)
-        lines.append(f"- {lang_padded} `{bar}`   {pct:5.1f}%")
-
-    lines.append("")
     lines.append(f"<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: {now_utc})*</sub>")
 
     return "\n".join(lines)
 
 
-def update_readme(new_content: str):
+def fetch_language_bytes(repos: list, token: str | None) -> dict[str, int]:
+    language_bytes = {}
+    print(f"Fetching language statistics for {len(repos)} repositories...")
+    for repo in repos:
+        if repo.get("fork", False):
+            continue
+        lang_url = repo.get("languages_url")
+        if not lang_url:
+            continue
+        langs = make_github_request(lang_url, token)
+        if isinstance(langs, dict):
+            for lang, count in langs.items():
+                language_bytes[lang] = language_bytes.get(lang, 0) + count
+    return language_bytes
+
+
+def update_stack_table(readme: str, language_bytes: dict[str, int]) -> str:
+    total_bytes = sum(language_bytes.values())
+
+    # Find the Stack table. We support either explicit markers or auto-detecting the table under ## Stack
+    stack_pattern = re.compile(
+        rf"({re.escape(STACK_START_MARKER)})(.*?)({re.escape(STACK_END_MARKER)})",
+        flags=re.DOTALL
+    )
+
+    has_markers = bool(stack_pattern.search(readme))
+
+    if not has_markers:
+        # Detect table under ## Stack
+        table_match = re.search(r"(## Stack\s*\n\s*)(\| Category \| Technologies \|[^\n]+\n\|[ :|-]+\n(?:\|[^\n]+\n)+)", readme)
+        if not table_match:
+            print("Warning: Stack table not found in README.md.", file=sys.stderr)
+            return readme
+        original_table = table_match.group(2)
+    else:
+        original_table = stack_pattern.search(readme).group(2).strip()
+
+    # Base rows definition
+    base_rows = [
+        ("Programming Language", "C", "Intermediate", "Deepening"),
+        ("", "C++", "Intermediate", "Deepening"),
+        ("", "Modern C++", "Intermediate", "Deepening"),
+        ("", "Java", "Beginner", "Learning"),
+        ("", "Python", "Intermediate", "Deepening"),
+        ("", "JavaScript", "Beginner", "Learning"),
+        ("", "TypeScript", "-", "Planned"),
+        ("Frontend", "HTML", "Intermediate", "Deepening"),
+        ("", "CSS", "Beginner", "Learning"),
+        ("", "SCSS / Tailwind", "-", "Planned"),
+        ("Backend", "Spring Boot", "Beginner", "Learning"),
+        ("", "RESTful APIs", "Beginner", "Learning"),
+        ("Databases", "-", "Beginner", "Learning"),
+        ("DevOps", "Linux", "Intermediate", "Deepening"),
+        ("", "Git & GitHub", "Intermediate", "-"),
+        ("", "GitHub Actions", "Beginner", "Learning"),
+        ("", "Docker", "Beginner", "Learning"),
+        ("", "Kubernetes", "-", "Planned"),
+        ("Build", "GNU Make", "Intermediate", "-"),
+        ("", "CMake", "Intermediate", "-"),
+        ("", "Maven", "Beginner", "Learning"),
+        ("", "Gradle", "-", "Planned"),
+        ("Research", "LaTeX", "Beginner", "Learning"),
+    ]
+
+    new_table_lines = [
+        "| Category | Technologies | Proficiency | Status | Distribution | Percentage |",
+        "| :--- | :--- | :--- | :--- | :--- | :---: |",
+    ]
+
+    for cat, tech, prof, stat in base_rows:
+        cat_col = f"**{cat}**" if cat else ""
+        mapped_langs = TECH_LANG_MAP.get(tech)
+        
+        if mapped_langs and total_bytes > 0:
+            tech_bytes = sum(language_bytes.get(l, 0) for l in mapped_langs)
+            pct = (tech_bytes / total_bytes * 100) if tech_bytes > 0 else 0.0
+            if pct > 0:
+                bar = render_progress_bar(pct, BAR_WIDTH)
+                dist_col = f"`{bar}`"
+                pct_col = f"{pct:.1f}%"
+            else:
+                dist_col = "-"
+                pct_col = "-"
+        else:
+            dist_col = "-"
+            pct_col = "-"
+
+        new_table_lines.append(f"| {cat_col} | {tech} | {prof} | {stat} | {dist_col} | {pct_col} |")
+
+    new_table_str = "\n".join(new_table_lines)
+
+    if has_markers:
+        replacement = f"{STACK_START_MARKER}\n{new_table_str}\n{STACK_END_MARKER}"
+        return stack_pattern.sub(replacement, readme)
+    else:
+        # Wrap table with markers so future updates are clean
+        replacement = f"\\1{STACK_START_MARKER}\n{new_table_str}\n{STACK_END_MARKER}"
+        return re.sub(
+            r"(## Stack\s*\n\s*)(\| Category \| Technologies \|[^\n]+\n\|[ :|-]+\n(?:\|[^\n]+\n)+)",
+            replacement,
+            readme,
+            count=1
+        )
+
+
+def update_readme(stats_content: str, language_bytes: dict[str, int]):
     if not os.path.exists(README_PATH):
         print(f"Error: {README_PATH} not found.", file=sys.stderr)
         sys.exit(1)
@@ -248,6 +336,10 @@ def update_readme(new_content: str):
     with open(README_PATH, "r", encoding="utf-8") as f:
         readme = f.read()
 
+    # 1. Update Stack table with Distribution & Percentage
+    readme = update_stack_table(readme, language_bytes)
+
+    # 2. Update Stats overview section
     pattern = re.compile(
         rf"({re.escape(START_MARKER)})(.*?)({re.escape(END_MARKER)})",
         flags=re.DOTALL
@@ -257,7 +349,7 @@ def update_readme(new_content: str):
         print(f"Error: Markers '{START_MARKER}' and '{END_MARKER}' not found in README.md.", file=sys.stderr)
         sys.exit(1)
 
-    replacement = f"{START_MARKER}\n{new_content}\n{END_MARKER}"
+    replacement = f"{START_MARKER}\n{stats_content}\n{END_MARKER}"
     updated_readme = pattern.sub(replacement, readme)
 
     with open(README_PATH, "w", encoding="utf-8") as f:
@@ -269,7 +361,6 @@ def update_readme(new_content: str):
 def main():
     token = os.environ.get("STATS_TOKEN") or os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
 
-    # If running locally and gh CLI is available, try getting token from gh auth token
     if not token:
         try:
             import subprocess
@@ -282,13 +373,12 @@ def main():
     repos = []
     seen_repo_ids = set()
 
-    # 1. Fetch user repos (with affiliation=owner to get public and private if token has permission)
+    # 1. Fetch user repos
     user_repos_url = "https://api.github.com/user/repos?per_page=100&affiliation=owner"
     print(f"Fetching authenticated user repositories from {user_repos_url}...")
     user_repos = make_github_request(user_repos_url, token)
 
     if not isinstance(user_repos, list):
-        # Fallback to public user repos endpoint if not authenticated as user
         fallback_url = f"https://api.github.com/users/{USERNAME}/repos?per_page=100&type=owner"
         print(f"Fallback to {fallback_url}...")
         user_repos = make_github_request(fallback_url, token)
@@ -320,8 +410,9 @@ def main():
         print("Failed to fetch any repositories.", file=sys.stderr)
         sys.exit(1)
 
+    language_bytes = fetch_language_bytes(repos, token)
     stats_content = generate_stats_block(repos, token)
-    update_readme(stats_content)
+    update_readme(stats_content, language_bytes)
 
 
 if __name__ == "__main__":
