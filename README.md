@@ -34,7 +34,7 @@ Creator & Maintainer @ NAF Studio
 |  | Gradle | - | Planned | - | - |
 | **Research** | LaTeX | Beginner | Learning | `█░░░░░░░░░░░` | 10.7% |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 08:17 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 08:21 UTC)*</sub>
 <!-- END_SECTION:stack -->
 
 ---
@@ -45,8 +45,6 @@ Creator & Maintainer @ NAF Studio
 <table>
 <tr>
 <td width="50%" valign="top">
-
-### Activity
 
 | Metric | Value |
 | :--- | :---: |
@@ -59,11 +57,9 @@ Creator & Maintainer @ NAF Studio
 </td>
 <td width="50%" valign="top">
 
-### Repositories & Community
-
 | Metric | Value |
 | :--- | :---: |
-| Organizations | naf-studio |
+| Sponsors | 0 |
 | Public repositories | 16 |
 | Private repositories | 13 |
 | Community stars | 2 |
@@ -73,5 +69,5 @@ Creator & Maintainer @ NAF Studio
 </tr>
 </table>
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 08:17 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 08:21 UTC)*</sub>
 <!-- END_SECTION:stats -->
