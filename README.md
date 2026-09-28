@@ -4,8 +4,6 @@ Software Engineering Student @ FPT University\
 Backend & DevOps Crew Member @ F-Code Club\
 Creator & Maintainer @ NAF Studio
 
-Passionate about Software Architecture, Systems Programming, Algorithm Design, and Automation Tooling.
-
 ---
 
 ## Stack
