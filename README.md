@@ -11,30 +11,30 @@ Creator & Maintainer @ NAF Studio
 <!-- START_SECTION:stack -->
 | Category | Technologies | Proficiency | Status | Distribution | Percentage |
 | :--- | :--- | :--- | :--- | :--- | :---: |
-| **Programming Language** | C | Intermediate | Deepening | `█████░░░░░░░` | 37.8% |
-|  | C++ | Intermediate | Deepening | `█░░░░░░░░░░░` | 2.1% |
-|  | Java | Beginner | Learning | `█████░░░░░░░` | 42.9% |
-|  | Python | Intermediate | Deepening | `█░░░░░░░░░░░` | 0.5% |
-|  | JavaScript | Beginner | Learning | `█░░░░░░░░░░░` | 4.6% |
+| **Programming Language** | C | Intermediate | Deepening | `███░░░░░░░░░` | 25.3% |
+|  | C++ | Intermediate | Deepening | `██░░░░░░░░░░` | 13.8% |
+|  | Java | Beginner | Learning | `███░░░░░░░░░` | 22.3% |
+|  | Python | Intermediate | Deepening | `█░░░░░░░░░░░` | 7.0% |
+|  | JavaScript | Beginner | Learning | `█░░░░░░░░░░░` | 2.6% |
 |  | TypeScript | - | Planned | - | - |
-| **Frontend** | HTML | Intermediate | Deepening | `█░░░░░░░░░░░` | 8.4% |
-|  | CSS | Beginner | Learning | `█░░░░░░░░░░░` | 2.3% |
-|  | Tailwind | - | Planned | `█░░░░░░░░░░░` | 2.3% |
+| **Frontend** | HTML | Intermediate | Deepening | `█░░░░░░░░░░░` | 6.2% |
+|  | CSS | Beginner | Learning | `█░░░░░░░░░░░` | 1.5% |
+|  | Tailwind | - | Planned | `█░░░░░░░░░░░` | 1.5% |
 | **Backend** | Spring Boot | Beginner | Learning | - | - |
 | **Databases** | - | Beginner | Learning | - | - |
 | **DevOps** | Linux | Intermediate | Deepening | - | - |
 |  | Git | Intermediate | - | - | - |
 |  | GitHub | Intermediate | - | - | - |
 |  | GitHub Actions | Beginner | Learning | - | - |
-|  | Docker | Beginner | Learning | `█░░░░░░░░░░░` | 0.2% |
+|  | Docker | Beginner | Learning | `█░░░░░░░░░░░` | 0.1% |
 |  | Kubernetes | - | Planned | - | - |
-| **Build** | GNU Make | Intermediate | - | `█░░░░░░░░░░░` | 0.5% |
+| **Build** | GNU Make | Intermediate | - | `█░░░░░░░░░░░` | 0.4% |
 |  | CMake | Intermediate | - | - | - |
 |  | Maven | Beginner | Learning | - | - |
 |  | Gradle | - | Planned | - | - |
-| **Research** | LaTeX | Beginner | Learning | - | - |
+| **Research** | LaTeX | Beginner | Learning | `█░░░░░░░░░░░` | 10.7% |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 08:11 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 08:17 UTC)*</sub>
 <!-- END_SECTION:stack -->
 
 ---
@@ -42,22 +42,36 @@ Creator & Maintainer @ NAF Studio
 ## Overview
 
 <!-- START_SECTION:stats -->
+<table>
+<tr>
+<td width="50%" valign="top">
+
 ### Activity
-- Commits: 1,712
-- Pull requests opened: 18
-- Pull requests reviewed: 7
-- Issues opened: 19
-- Issue comments: 27
-- Current commit streak: 1 days
-- Best commit streak: 6 days
+
+| Metric | Value |
+| :--- | :---: |
+| Commits | 2,079 |
+| Pull requests opened | 18 |
+| Pull requests reviewed | 7 |
+| Issues opened | 19 |
+| Issue comments | 28 |
+
+</td>
+<td width="50%" valign="top">
 
 ### Repositories & Community
-- Organizations: naf-studio
-- Public repositories: 16
-- Private repositories: 0
-- Community stars: 2
-- Community forks: 3
-- Sponsors: 0
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 08:11 UTC)*</sub>
+| Metric | Value |
+| :--- | :---: |
+| Organizations | naf-studio |
+| Public repositories | 16 |
+| Private repositories | 13 |
+| Community stars | 2 |
+| Community forks | 3 |
+
+</td>
+</tr>
+</table>
+
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 08:17 UTC)*</sub>
 <!-- END_SECTION:stats -->
