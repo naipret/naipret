@@ -49,16 +49,16 @@ Creator & Maintainer @ NAF Studio
 
 | Language | Distribution | Percentage |
 | :--- | :--- | :---: |
-| **Java** | `█████████░░░░░░░░░░░` | 42.6% |
-| **C** | `████████░░░░░░░░░░░░` | 37.5% |
-| **HTML** | `██░░░░░░░░░░░░░░░░░░` | 8.3% |
+| **Java** | `█████████░░░░░░░░░░░` | 42.9% |
+| **C** | `████████░░░░░░░░░░░░` | 37.8% |
+| **HTML** | `██░░░░░░░░░░░░░░░░░░` | 8.4% |
 | **JavaScript** | `█░░░░░░░░░░░░░░░░░░░` | 4.6% |
-| **CSS** | `░░░░░░░░░░░░░░░░░░░░` | 2.2% |
+| **CSS** | `░░░░░░░░░░░░░░░░░░░░` | 2.3% |
 | **C++** | `░░░░░░░░░░░░░░░░░░░░` | 2.1% |
-| **Python** | `░░░░░░░░░░░░░░░░░░░░` | 1.2% |
 | **Makefile** | `░░░░░░░░░░░░░░░░░░░░` | 0.5% |
+| **Python** | `░░░░░░░░░░░░░░░░░░░░` | 0.5% |
 | **Batchfile** | `░░░░░░░░░░░░░░░░░░░░` | 0.4% |
 | **Shell** | `░░░░░░░░░░░░░░░░░░░░` | 0.4% |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 04:26 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 07:09 UTC)*</sub>
 <!-- END_SECTION:stats -->
