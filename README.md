@@ -40,33 +40,33 @@ Creator & Maintainer @ NAF Studio
 
 <!-- START_SECTION:stats -->
 ### Activity
-- Commits: 2,070
+- Commits: 1,707
 - Pull requests opened: 18
 - Pull requests reviewed: 7
 - Issues opened: 19
-- Issue comments: 28
+- Issue comments: 27
 - Current commit streak: 1 days
 - Best commit streak: 6 days
 
 ### Repositories & Community
 - Organizations: naf-studio
 - Public repositories: 16
-- Private repositories: 13
+- Private repositories: 0
 - Community stars: 2
 - Community forks: 3
 - Sponsors: 0
 
 ### Top Languages
-- C:           `█████░░░░░░░░░░░░░░░`    25.3%
-- Java:        `████░░░░░░░░░░░░░░░░`    22.3%
-- C++:         `███░░░░░░░░░░░░░░░░░`    13.8%
-- TeX:         `██░░░░░░░░░░░░░░░░░░`    10.7%
-- NWScript:    `██░░░░░░░░░░░░░░░░░░`     8.1%
-- Python:      `█░░░░░░░░░░░░░░░░░░░`     7.0%
-- HTML:        `█░░░░░░░░░░░░░░░░░░░`     6.2%
-- JavaScript:  `█░░░░░░░░░░░░░░░░░░░`     2.6%
-- Batchfile:   `░░░░░░░░░░░░░░░░░░░░`     1.5%
-- CSS:         `░░░░░░░░░░░░░░░░░░░░`     1.5%
+- Java:        `█████████░░░░░░░░░░░`    42.9%
+- C:           `████████░░░░░░░░░░░░`    37.8%
+- HTML:        `██░░░░░░░░░░░░░░░░░░`     8.4%
+- JavaScript:  `█░░░░░░░░░░░░░░░░░░░`     4.6%
+- CSS:         `░░░░░░░░░░░░░░░░░░░░`     2.3%
+- C++:         `░░░░░░░░░░░░░░░░░░░░`     2.1%
+- Makefile:    `░░░░░░░░░░░░░░░░░░░░`     0.5%
+- Python:      `░░░░░░░░░░░░░░░░░░░░`     0.5%
+- Batchfile:   `░░░░░░░░░░░░░░░░░░░░`     0.4%
+- Shell:       `░░░░░░░░░░░░░░░░░░░░`     0.4%
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 07:35 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-28 07:37 UTC)*</sub>
 <!-- END_SECTION:stats -->
