@@ -200,25 +200,40 @@ def generate_stats_block(repos: list, token: str | None) -> str:
 
     now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
-    lines = []
-    lines.append("### Activity")
-    lines.append(f"- Commits: {total_commits:,}")
-    lines.append(f"- Pull requests opened: {prs_opened:,}")
-    lines.append(f"- Pull requests reviewed: {prs_reviewed:,}")
-    lines.append(f"- Issues opened: {issues_opened:,}")
-    lines.append(f"- Issue comments: {issue_comments:,}")
-    lines.append(f"- Current commit streak: {current_streak} days")
-    lines.append(f"- Best commit streak: {best_streak} days")
-    lines.append("")
-    lines.append("### Repositories & Community")
-    lines.append(f"- Organizations: {orgs_str}")
-    lines.append(f"- Public repositories: {public_count}")
-    lines.append(f"- Private repositories: {private_count}")
-    lines.append(f"- Community stars: {total_stars}")
-    lines.append(f"- Community forks: {total_forks}")
-    lines.append(f"- Sponsors: {sponsors_count}")
-    lines.append("")
-    lines.append(f"<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: {now_utc})*</sub>")
+    lines = [
+        "<table>",
+        "<tr>",
+        '<td width="50%" valign="top">',
+        "",
+        "### Activity",
+        "",
+        "| Metric | Value |",
+        "| :--- | :---: |",
+        f"| Commits | {total_commits:,} |",
+        f"| Pull requests opened | {prs_opened:,} |",
+        f"| Pull requests reviewed | {prs_reviewed:,} |",
+        f"| Issues opened | {issues_opened:,} |",
+        f"| Issue comments | {issue_comments:,} |",
+        "",
+        "</td>",
+        '<td width="50%" valign="top">',
+        "",
+        "### Repositories & Community",
+        "",
+        "| Metric | Value |",
+        "| :--- | :---: |",
+        f"| Organizations | {orgs_str} |",
+        f"| Public repositories | {public_count} |",
+        f"| Private repositories | {private_count} |",
+        f"| Community stars | {total_stars} |",
+        f"| Community forks | {total_forks} |",
+        "",
+        "</td>",
+        "</tr>",
+        "</table>",
+        "",
+        f"<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: {now_utc})*</sub>",
+    ]
 
     return "\n".join(lines)
 
