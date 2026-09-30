@@ -1,432 +1,535 @@
+from __future__ import annotations
+
 import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.request
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
 
-USERNAME = "naipret"
-ORGANIZATIONS = ["naf-studio"]
-README_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "README.md")
-START_MARKER = "<!-- START_SECTION:stats -->"
-END_MARKER = "<!-- END_SECTION:stats -->"
-STACK_START_MARKER = "<!-- START_SECTION:stack -->"
-STACK_END_MARKER = "<!-- END_SECTION:stack -->"
-BAR_WIDTH = 12
-
-# Mapping from Stack Technology name to GitHub Language name(s)
-TECH_LANG_MAP = {
-    "C": ["C"],
-    "C++": ["C++"],
-    "Java": ["Java"],
-    "Python": ["Python"],
-    "JavaScript": ["JavaScript"],
-    "TypeScript": ["TypeScript"],
-    "HTML": ["HTML"],
-    "CSS": ["CSS"],
-    "Tailwind": ["CSS"],
-    "LaTeX": ["TeX", "LaTeX"],
-    "GNU Make": ["Makefile"],
-    "CMake": ["CMake"],
-    "Maven": ["Maven POM", "XML"],
-    "Docker": ["Dockerfile"],
-    "Shell": ["Shell"],
-    "Batchfile": ["Batchfile"],
-}
+# Try importing pyyaml, with clear error message if missing
+try:
+    import yaml
+except ImportError:
+    yaml = None
 
 
-def make_github_request(url: str, token: str | None = None, data: dict | None = None):
-    headers = {
-        "Accept": "application/vnd.github+json",
-        "User-Agent": f"{USERNAME}-stats-bot",
-    }
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
+# ------------------------------------------------------------------------------
+# Data Models
+# ------------------------------------------------------------------------------
 
-    req_data = None
-    if data is not None:
-        req_data = json.dumps(data).encode("utf-8")
-        headers["Content-Type"] = "application/json"
-
-    req = urllib.request.Request(url, data=req_data, headers=headers)
-    try:
-        with urllib.request.urlopen(req, timeout=30) as response:
-            return json.loads(response.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        print(f"HTTP Error {e.code} for URL: {url}", file=sys.stderr)
-        if e.code == 403:
-            print("Rate limit exceeded or insufficient permissions.", file=sys.stderr)
-        return None
-    except Exception as e:
-        print(f"Error fetching {url}: {e}", file=sys.stderr)
-        return None
+@dataclass
+class StackItem:
+    name: str
+    proficiency: str = "-"
+    status: str = "-"
+    languages: List[str] = field(default_factory=list)
 
 
-def fetch_graphql_data(token: str | None) -> dict:
-    if not token:
-        return {}
-
-    query = """
-    query($login: String!) {
-      user(login: $login) {
-        contributionsCollection {
-          totalCommitContributions
-          totalPullRequestContributions
-          totalPullRequestReviewContributions
-          totalIssueContributions
-          contributionCalendar {
-            weeks {
-              contributionDays {
-                contributionCount
-                date
-              }
-            }
-          }
-        }
-        organizations(first: 10) {
-          nodes {
-            login
-          }
-        }
-        sponsorshipsAsMaintainer {
-          totalCount
-        }
-      }
-    }
-    """
-    res = make_github_request("https://api.github.com/graphql", token, {"query": query, "variables": {"login": USERNAME}})
-    if res and "data" in res and res["data"].get("user"):
-        return res["data"]["user"]
-    return {}
+@dataclass
+class StackCategory:
+    category: str
+    items: List[StackItem] = field(default_factory=list)
 
 
-def calculate_commit_streaks(weeks: list) -> tuple[int, int]:
-    days = []
-    for w in weeks:
-        for d in w.get("contributionDays", []):
-            days.append((d.get("date"), d.get("contributionCount", 0)))
+@dataclass
+class MetricItem:
+    key: str
+    label: str
 
-    days.sort(key=lambda x: x[0])
 
-    best_streak = 0
-    temp_streak = 0
-    today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+@dataclass
+class ColumnConfig:
+    header: str
+    metrics: List[MetricItem] = field(default_factory=list)
 
-    for date, count in days:
-        if count > 0:
-            temp_streak += 1
-            if temp_streak > best_streak:
-                best_streak = temp_streak
-        else:
-            temp_streak = 0
 
-    current_streak = 0
-    if days:
-        reversed_days = list(reversed(days))
-        first = reversed_days[0]
-        start_idx = 0
-        if first[0] == today_str and first[1] == 0:
-            start_idx = 1
+@dataclass
+class OverviewConfig:
+    left_column: ColumnConfig
+    right_column: ColumnConfig
 
-        for i in range(start_idx, len(reversed_days)):
-            if reversed_days[i][1] > 0:
-                current_streak += 1
+
+@dataclass
+class AppConfig:
+    username: str
+    organizations: List[str]
+    stack: List[StackCategory]
+    overview: OverviewConfig
+
+
+# ------------------------------------------------------------------------------
+# Configuration Manager
+# ------------------------------------------------------------------------------
+
+class ConfigManager:
+    """Handles loading and parsing configuration from YAML or JSON."""
+
+    @staticmethod
+    def find_config_path(base_dir: Path) -> Path:
+        candidates = [
+            base_dir / ".github" / "config.yml",
+            base_dir / ".github" / "config.yaml",
+            base_dir / ".github" / "config.json",
+            base_dir / "config.yml",
+            base_dir / "config.json",
+        ]
+        for path in candidates:
+            if path.is_file():
+                return path
+        raise FileNotFoundError(
+            f"No configuration file found. Checked: {[str(c) for c in candidates]}"
+        )
+
+    @classmethod
+    def load(cls, base_dir: Path) -> AppConfig:
+        config_path = cls.find_config_path(base_dir)
+        print(f"Loading configuration from: {config_path}")
+
+        raw_data: Dict[str, Any] = {}
+        with open(config_path, "r", encoding="utf-8") as f:
+            if config_path.suffix in [".yml", ".yaml"]:
+                if yaml is None:
+                    raise ImportError(
+                        "PyYAML is required to parse YAML config. "
+                        "Install it with 'pip install pyyaml'."
+                    )
+                raw_data = yaml.safe_load(f) or {}
             else:
-                break
+                raw_data = json.load(f)
 
-    return current_streak, best_streak
+        # Parse User
+        user_info = raw_data.get("user", {})
+        username = user_info.get("username", "naipret")
+        organizations = user_info.get("organizations", [])
 
+        # Parse Stack
+        stack_categories: List[StackCategory] = []
+        for cat_data in raw_data.get("stack", []):
+            cat_name = cat_data.get("category", "")
+            items: List[StackItem] = []
+            for item_data in cat_data.get("items", []):
+                items.append(
+                    StackItem(
+                        name=item_data.get("name", ""),
+                        proficiency=item_data.get("proficiency", "-"),
+                        status=item_data.get("status", "-"),
+                        languages=item_data.get("languages", []) or [],
+                    )
+                )
+            stack_categories.append(StackCategory(category=cat_name, items=items))
 
-def fetch_issue_comments_count(token: str | None) -> int:
-    url = f"https://api.github.com/search/issues?q=commenter:{USERNAME}"
-    res = make_github_request(url, token)
-    if res and isinstance(res, dict):
-        return res.get("total_count", 0)
-    return 0
+        # Parse Overview
+        overview_data = raw_data.get("overview", {})
+        left_data = overview_data.get("left_column", {})
+        right_data = overview_data.get("right_column", {})
 
+        left_metrics = [
+            MetricItem(key=m.get("key", ""), label=m.get("label", ""))
+            for m in left_data.get("metrics", [])
+        ]
+        right_metrics = [
+            MetricItem(key=m.get("key", ""), label=m.get("label", ""))
+            for m in right_data.get("metrics", [])
+        ]
 
-def fetch_total_commits(token: str | None, fallback_count: int) -> int:
-    url = f"https://api.github.com/search/commits?q=author:{USERNAME}"
-    res = make_github_request(url, token)
-    if res and isinstance(res, dict) and "total_count" in res:
-        return res["total_count"]
-    return fallback_count
+        overview_config = OverviewConfig(
+            left_column=ColumnConfig(
+                header=left_data.get("header", "Activity"),
+                metrics=left_metrics,
+            ),
+            right_column=ColumnConfig(
+                header=right_data.get("header", "Community & Repositories"),
+                metrics=right_metrics,
+            ),
+        )
 
-
-def render_progress_bar(percentage: float, width: int = BAR_WIDTH) -> str:
-    if percentage <= 0:
-        return "░" * width
-    filled_len = int(round(width * percentage / 100.0))
-    filled_len = max(1 if percentage > 0.05 else 0, min(width, filled_len))
-    return "█" * filled_len + "░" * (width - filled_len)
-
-
-def generate_stats_block(repos: list, token: str | None) -> str:
-    public_repos = [r for r in repos if not r.get("private", False)]
-    private_repos = [r for r in repos if r.get("private", False)]
-
-    public_count = len(public_repos)
-    private_count = len(private_repos)
-    total_stars = sum(r.get("stargazers_count", 0) for r in repos)
-    total_forks = sum(r.get("forks_count", 0) for r in repos)
-
-    # GraphQL data
-    graphql_data = fetch_graphql_data(token)
-    contrib = graphql_data.get("contributionsCollection", {})
-
-    commits_calendar_count = contrib.get("totalCommitContributions", 0)
-    total_commits = fetch_total_commits(token, commits_calendar_count)
-    prs_opened = contrib.get("totalPullRequestContributions", 0)
-    prs_reviewed = contrib.get("totalPullRequestReviewContributions", 0)
-    issues_opened = contrib.get("totalIssueContributions", 0)
-
-    # Issue comments
-    issue_comments = fetch_issue_comments_count(token)
-
-    # Commit streaks
-    weeks = contrib.get("contributionCalendar", {}).get("weeks", [])
-    current_streak, best_streak = calculate_commit_streaks(weeks)
-
-    # Organizations
-    org_nodes = graphql_data.get("organizations", {}).get("nodes", [])
-    found_orgs = [o.get("login") for o in org_nodes if o.get("login")]
-    for org in ORGANIZATIONS:
-        if org not in found_orgs:
-            found_orgs.append(org)
-    orgs_str = ", ".join(found_orgs) if found_orgs else "None"
-
-    # Sponsors
-    sponsors_count = graphql_data.get("sponsorshipsAsMaintainer", {}).get("totalCount", 0)
-
-    now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-
-    lines = [
-        "<table>",
-        "<tr>",
-        '<td width="50%" valign="top">',
-        "",
-        "| Metric | Value |",
-        "| :--- | :---: |",
-        f"| Commits | {total_commits:,} |",
-        f"| Pull requests opened | {prs_opened:,} |",
-        f"| Pull requests reviewed | {prs_reviewed:,} |",
-        f"| Issues opened | {issues_opened:,} |",
-        f"| Issue comments | {issue_comments:,} |",
-        "",
-        "</td>",
-        '<td width="50%" valign="top">',
-        "",
-        "| Metric | Value |",
-        "| :--- | :---: |",
-        f"| Sponsors | {sponsors_count} |",
-        f"| Public repositories | {public_count} |",
-        f"| Private repositories | {private_count} |",
-        f"| Community stars | {total_stars} |",
-        f"| Community forks | {total_forks} |",
-        "",
-        "</td>",
-        "</tr>",
-        "</table>",
-        "",
-        f"<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: {now_utc})*</sub>",
-    ]
-
-    return "\n".join(lines)
-
-
-def fetch_language_bytes(repos: list, token: str | None) -> dict[str, int]:
-    language_bytes = {}
-    print(f"Fetching language statistics for {len(repos)} repositories...")
-    for repo in repos:
-        if repo.get("fork", False):
-            continue
-        lang_url = repo.get("languages_url")
-        if not lang_url:
-            continue
-        langs = make_github_request(lang_url, token)
-        if isinstance(langs, dict):
-            for lang, count in langs.items():
-                language_bytes[lang] = language_bytes.get(lang, 0) + count
-    return language_bytes
-
-
-def update_stack_table(readme: str, language_bytes: dict[str, int]) -> str:
-    total_bytes = sum(language_bytes.values())
-
-    # Find the Stack table. We support either explicit markers or auto-detecting the table under ## Stack
-    stack_pattern = re.compile(
-        rf"({re.escape(STACK_START_MARKER)})(.*?)({re.escape(STACK_END_MARKER)})",
-        flags=re.DOTALL
-    )
-
-    has_markers = bool(stack_pattern.search(readme))
-
-    if not has_markers:
-        # Detect table under ## Stack
-        table_match = re.search(r"(## Stack\s*\n\s*)(\| Category \| Technologies \|[^\n]+\n\|[ :|-]+\n(?:\|[^\n]+\n)+)", readme)
-        if not table_match:
-            print("Warning: Stack table not found in README.md.", file=sys.stderr)
-            return readme
-        original_table = table_match.group(2)
-    else:
-        original_table = stack_pattern.search(readme).group(2).strip()
-
-    # Base rows definition
-    base_rows = [
-        ("Programming Language", "C", "Intermediate", "Deepening"),
-        ("", "C++", "Intermediate", "Deepening"),
-        ("", "Java", "Beginner", "Learning"),
-        ("", "Python", "Intermediate", "Deepening"),
-        ("", "JavaScript", "Beginner", "Learning"),
-        ("", "TypeScript", "-", "Planned"),
-        ("Frontend", "HTML", "Intermediate", "Deepening"),
-        ("", "CSS", "Beginner", "Learning"),
-        ("", "Tailwind", "-", "Planned"),
-        ("Backend", "Spring Boot", "Beginner", "Learning"),
-        ("Databases", "-", "Beginner", "Learning"),
-        ("DevOps", "Linux", "Intermediate", "Deepening"),
-        ("", "Git", "Intermediate", "-"),
-        ("", "GitHub", "Intermediate", "-"),
-        ("", "GitHub Actions", "Beginner", "Learning"),
-        ("", "Docker", "Beginner", "Learning"),
-        ("", "Kubernetes", "-", "Planned"),
-        ("Build", "GNU Make", "Intermediate", "-"),
-        ("", "CMake", "Intermediate", "-"),
-        ("", "Maven", "Beginner", "Learning"),
-        ("", "Gradle", "-", "Planned"),
-        ("Research", "LaTeX", "Beginner", "Learning"),
-    ]
-
-    new_table_lines = [
-        "| Category | Technologies | Proficiency | Status | Distribution | Percentage |",
-        "| :--- | :--- | :--- | :--- | :--- | :---: |",
-    ]
-
-    for cat, tech, prof, stat in base_rows:
-        cat_col = f"**{cat}**" if cat else ""
-        mapped_langs = TECH_LANG_MAP.get(tech)
-
-        if mapped_langs and total_bytes > 0:
-            tech_bytes = sum(language_bytes.get(l, 0) for l in mapped_langs)
-            pct = (tech_bytes / total_bytes * 100) if tech_bytes > 0 else 0.0
-            if pct > 0:
-                bar = render_progress_bar(pct, BAR_WIDTH)
-                dist_col = f"`{bar}`"
-                pct_col = f"{pct:.1f}%"
-            else:
-                dist_col = "-"
-                pct_col = "-"
-        else:
-            dist_col = "-"
-            pct_col = "-"
-
-        new_table_lines.append(f"| {cat_col} | {tech} | {prof} | {stat} | {dist_col} | {pct_col} |")
-
-    now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    new_table_lines.append("")
-    new_table_lines.append(f"<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: {now_utc})*</sub>")
-
-    new_table_str = "\n".join(new_table_lines)
-
-    if has_markers:
-        replacement = f"{STACK_START_MARKER}\n{new_table_str}\n{STACK_END_MARKER}"
-        return stack_pattern.sub(replacement, readme)
-    else:
-        # Wrap table with markers so future updates are clean
-        replacement = f"\\1{STACK_START_MARKER}\n{new_table_str}\n{STACK_END_MARKER}"
-        return re.sub(
-            r"(## Stack\s*\n\s*)(\| Category \| Technologies \|[^\n]+\n\|[ :|-]+\n(?:\|[^\n]+\n)+)",
-            replacement,
-            readme,
-            count=1
+        return AppConfig(
+            username=username,
+            organizations=organizations,
+            stack=stack_categories,
+            overview=overview_config,
         )
 
 
-def update_readme(stats_content: str, language_bytes: dict[str, int]):
-    if not os.path.exists(README_PATH):
-        print(f"Error: {README_PATH} not found.", file=sys.stderr)
-        sys.exit(1)
+# ------------------------------------------------------------------------------
+# GitHub API Client
+# ------------------------------------------------------------------------------
 
-    with open(README_PATH, "r", encoding="utf-8") as f:
-        readme = f.read()
+class GitHubApiClient:
+    """Manages all authenticated requests to GitHub REST and GraphQL APIs."""
 
-    # 1. Update Stack table with Distribution & Percentage
-    readme = update_stack_table(readme, language_bytes)
+    def __init__(self, token: Optional[str] = None, user_agent: str = "profile-stats-bot"):
+        self.token = token or self._resolve_token()
+        self.user_agent = user_agent
 
-    # 2. Update Stats overview section
-    pattern = re.compile(
-        rf"({re.escape(START_MARKER)})(.*?)({re.escape(END_MARKER)})",
-        flags=re.DOTALL
-    )
+    @staticmethod
+    def _resolve_token() -> Optional[str]:
+        # Check standard environment variables
+        for var in ["STATS_TOKEN", "GITHUB_TOKEN", "GH_TOKEN"]:
+            val = os.environ.get(var)
+            if val and val.strip():
+                return val.strip()
 
-    if not pattern.search(readme):
-        print(f"Error: Markers '{START_MARKER}' and '{END_MARKER}' not found in README.md.", file=sys.stderr)
-        sys.exit(1)
-
-    replacement = f"{START_MARKER}\n{stats_content}\n{END_MARKER}"
-    updated_readme = pattern.sub(replacement, readme)
-
-    with open(README_PATH, "w", encoding="utf-8") as f:
-        f.write(updated_readme)
-
-    print("README.md updated successfully!")
-
-
-def main():
-    token = os.environ.get("STATS_TOKEN") or os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
-
-    if not token:
+        # Fallback to local gh CLI if available
         try:
             import subprocess
-            res = subprocess.run(["gh", "auth", "token"], capture_output=True, text=True)
-            if res.returncode == 0 and res.stdout.strip():
-                token = res.stdout.strip()
+            proc = subprocess.run(
+                ["gh", "auth", "token"], capture_output=True, text=True, timeout=5
+            )
+            if proc.returncode == 0 and proc.stdout.strip():
+                return proc.stdout.strip()
         except Exception:
             pass
 
-    repos = []
-    seen_repo_ids = set()
+        return None
 
-    # 1. Fetch user repos
-    user_repos_url = "https://api.github.com/user/repos?per_page=100&affiliation=owner"
-    print(f"Fetching authenticated user repositories from {user_repos_url}...")
-    user_repos = make_github_request(user_repos_url, token)
+    def request(self, url: str, data: Optional[Dict[str, Any]] = None) -> Any:
+        headers = {
+            "Accept": "application/vnd.github+json",
+            "User-Agent": self.user_agent,
+        }
+        if self.token:
+            headers["Authorization"] = f"Bearer {self.token}"
 
-    if not isinstance(user_repos, list):
-        fallback_url = f"https://api.github.com/users/{USERNAME}/repos?per_page=100&type=owner"
-        print(f"Fallback to {fallback_url}...")
-        user_repos = make_github_request(fallback_url, token)
+        req_body = None
+        if data is not None:
+            req_body = json.dumps(data).encode("utf-8")
+            headers["Content-Type"] = "application/json"
 
-    if isinstance(user_repos, list):
-        for r in user_repos:
-            repo_id = r.get("id")
-            if repo_id and repo_id not in seen_repo_ids:
-                seen_repo_ids.add(repo_id)
-                repos.append(r)
-    else:
-        print(f"Warning: Failed to fetch repositories for user {USERNAME}.", file=sys.stderr)
+        req = urllib.request.Request(url, data=req_body, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            print(f"[API Error] HTTP {e.code} for URL: {url}", file=sys.stderr)
+            if e.code == 403:
+                print("Warning: GitHub API rate limit reached or token lacks permission.", file=sys.stderr)
+            return None
+        except Exception as e:
+            print(f"[API Error] Failed to fetch {url}: {e}", file=sys.stderr)
+            return None
 
-    # 2. Fetch org repos
-    for org in ORGANIZATIONS:
-        org_repos_url = f"https://api.github.com/orgs/{org}/repos?per_page=100"
-        print(f"Fetching organization repositories from {org_repos_url}...")
-        org_repos = make_github_request(org_repos_url, token)
-        if isinstance(org_repos, list):
-            for r in org_repos:
-                repo_id = r.get("id")
-                if repo_id and repo_id not in seen_repo_ids:
-                    seen_repo_ids.add(repo_id)
+    def graphql(self, query: str, variables: Dict[str, Any]) -> Dict[str, Any]:
+        if not self.token:
+            print("[GraphQL] Warning: No token provided for GraphQL API.", file=sys.stderr)
+            return {}
+
+        res = self.request(
+            "https://api.github.com/graphql",
+            data={"query": query, "variables": variables},
+        )
+        if res and isinstance(res, dict) and "data" in res:
+            return res.get("data", {})
+        return {}
+
+
+# ------------------------------------------------------------------------------
+# Statistics Aggregator
+# ------------------------------------------------------------------------------
+
+class StatsAggregator:
+    """Aggregates repositories, commits, language bytes, and community metrics."""
+
+    def __init__(self, client: GitHubApiClient, username: str, organizations: List[str]):
+        self.client = client
+        self.username = username
+        self.organizations = organizations
+
+    def fetch_all_repositories(self) -> List[Dict[str, Any]]:
+        repos: List[Dict[str, Any]] = []
+        seen_ids: set[int] = set()
+
+        # 1. Fetch user owned repos
+        user_url = f"https://api.github.com/user/repos?per_page=100&affiliation=owner"
+        user_repos = self.client.request(user_url)
+        if not isinstance(user_repos, list):
+            fallback_url = f"https://api.github.com/users/{self.username}/repos?per_page=100&type=owner"
+            user_repos = self.client.request(fallback_url)
+
+        if isinstance(user_repos, list):
+            for r in user_repos:
+                rid = r.get("id")
+                if rid and rid not in seen_ids:
+                    seen_ids.add(rid)
                     repos.append(r)
+
+        # 2. Fetch organization repos
+        for org in self.organizations:
+            org_url = f"https://api.github.com/orgs/{org}/repos?per_page=100"
+            org_repos = self.client.request(org_url)
+            if isinstance(org_repos, list):
+                for r in org_repos:
+                    rid = r.get("id")
+                    if rid and rid not in seen_ids:
+                        seen_ids.add(rid)
+                        repos.append(r)
+
+        return repos
+
+    def aggregate_language_bytes(self, repos: List[Dict[str, Any]]) -> Dict[str, int]:
+        lang_bytes: Dict[str, int] = {}
+        non_forks = [r for r in repos if not r.get("fork", False)]
+        print(f"Aggregating languages across {len(non_forks)} non-fork repositories...")
+
+        for repo in non_forks:
+            lang_url = repo.get("languages_url")
+            if not lang_url:
+                continue
+            res = self.client.request(lang_url)
+            if isinstance(res, dict):
+                for lang, count in res.items():
+                    lang_bytes[lang] = lang_bytes.get(lang, 0) + count
+
+        return lang_bytes
+
+    def fetch_metrics(self, repos: List[Dict[str, Any]]) -> Dict[str, int]:
+        # Repository counts
+        public_repos = sum(1 for r in repos if not r.get("private", False))
+        private_repos = sum(1 for r in repos if r.get("private", False))
+        total_stars = sum(r.get("stargazers_count", 0) for r in repos)
+        total_forks = sum(r.get("forks_count", 0) for r in repos)
+
+        # GraphQL Collection
+        query = """
+        query($login: String!) {
+          user(login: $login) {
+            contributionsCollection {
+              totalCommitContributions
+              totalPullRequestContributions
+              totalPullRequestReviewContributions
+              totalIssueContributions
+              contributionCalendar {
+                weeks {
+                  contributionDays {
+                    contributionCount
+                    date
+                  }
+                }
+              }
+            }
+            sponsorshipsAsMaintainer {
+              totalCount
+            }
+          }
+        }
+        """
+        gql_data = self.client.graphql(query, {"login": self.username})
+        user_node = gql_data.get("user") or {}
+        contrib = user_node.get("contributionsCollection", {})
+
+        calendar_commits = contrib.get("totalCommitContributions", 0)
+        prs_opened = contrib.get("totalPullRequestContributions", 0)
+        prs_reviewed = contrib.get("totalPullRequestReviewContributions", 0)
+        issues_opened = contrib.get("totalIssueContributions", 0)
+        sponsors = user_node.get("sponsorshipsAsMaintainer", {}).get("totalCount", 0)
+
+        # Total commits via search fallback
+        total_commits = self._fetch_total_commits_count(fallback=calendar_commits)
+
+        # Issue comments count
+        issue_comments = self._fetch_issue_comments_count()
+
+        return {
+            "commits": total_commits,
+            "prs_opened": prs_opened,
+            "prs_reviewed": prs_reviewed,
+            "issues_opened": issues_opened,
+            "issue_comments": issue_comments,
+            "sponsors": sponsors,
+            "public_repos": public_repos,
+            "private_repos": private_repos,
+            "stars": total_stars,
+            "forks": total_forks,
+        }
+
+    def _fetch_total_commits_count(self, fallback: int) -> int:
+        url = f"https://api.github.com/search/commits?q=author:{self.username}"
+        res = self.client.request(url)
+        if isinstance(res, dict) and "total_count" in res:
+            return res["total_count"]
+        return fallback
+
+    def _fetch_issue_comments_count(self) -> int:
+        url = f"https://api.github.com/search/issues?q=commenter:{self.username}"
+        res = self.client.request(url)
+        if isinstance(res, dict):
+            return res.get("total_count", 0)
+        return 0
+
+
+# ------------------------------------------------------------------------------
+# Markdown Renderer
+# ------------------------------------------------------------------------------
+
+class MarkdownRenderer:
+    """Renders clean, GitHub Flavored Markdown (GFM) tables."""
+
+    @staticmethod
+    def get_timestamp_note() -> str:
+        now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+        return f"<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: {now_utc})*</sub>"
+
+    @classmethod
+    def render_stack_table(
+        cls, categories: List[StackCategory], language_bytes: Dict[str, int]
+    ) -> str:
+        total_bytes = sum(language_bytes.values())
+
+        lines = [
+            "| Category | Technologies | Proficiency | Status | Percentage |",
+            "| :--- | :--- | :--- | :--- | :---: |",
+        ]
+
+        for cat in categories:
+            for idx, item in enumerate(cat.items):
+                # Category label only appears on the first item in the group
+                cat_col = f"**{cat.category}**" if idx == 0 else ""
+
+                pct_col = "-"
+                if item.languages and total_bytes > 0:
+                    matched_bytes = sum(language_bytes.get(l, 0) for l in item.languages)
+                    if matched_bytes > 0:
+                        pct = (matched_bytes / total_bytes) * 100
+                        pct_col = f"{pct:.1f}%"
+
+                lines.append(
+                    f"| {cat_col} | {item.name} | {item.proficiency} | {item.status} | {pct_col} |"
+                )
+
+        lines.append("")
+        lines.append(cls.get_timestamp_note())
+        return "\n".join(lines)
+
+    @classmethod
+    def render_overview_table(
+        cls, config: OverviewConfig, metrics_data: Dict[str, int]
+    ) -> str:
+        left = config.left_column
+        right = config.right_column
+
+        left_header = left.header
+        right_header = right.header
+
+        lines = [
+            f"| {left_header} | Value | {right_header} | Value |",
+            "| :--- | :---: | :--- | :---: |",
+        ]
+
+        max_rows = max(len(left.metrics), len(right.metrics))
+        for i in range(max_rows):
+            # Left column item
+            if i < len(left.metrics):
+                m_left = left.metrics[i]
+                val_left = metrics_data.get(m_left.key, 0)
+                l_col = f"{m_left.label} | {val_left:,}"
+            else:
+                l_col = " | "
+
+            # Right column item
+            if i < len(right.metrics):
+                m_right = right.metrics[i]
+                val_right = metrics_data.get(m_right.key, 0)
+                r_col = f"{m_right.label} | {val_right:,}"
+            else:
+                r_col = " | "
+
+            lines.append(f"| {l_col} | {r_col} |")
+
+        lines.append("")
+        lines.append(cls.get_timestamp_note())
+        return "\n".join(lines)
+
+
+# ------------------------------------------------------------------------------
+# README Synchronizer
+# ------------------------------------------------------------------------------
+
+class ReadmeSynchronizer:
+    """Updates designated section blocks in the target README.md file."""
+
+    STACK_START = "<!-- START_SECTION:stack -->"
+    STACK_END = "<!-- END_SECTION:stack -->"
+    STATS_START = "<!-- START_SECTION:stats -->"
+    STATS_END = "<!-- END_SECTION:stats -->"
+
+    @classmethod
+    def sync(cls, readme_path: Path, stack_md: str, stats_md: str) -> None:
+        if not readme_path.is_file():
+            raise FileNotFoundError(f"Target README not found at {readme_path}")
+
+        with open(readme_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        # 1. Update Stack section
+        stack_pattern = re.compile(
+            rf"({re.escape(cls.STACK_START)})(.*?)({re.escape(cls.STACK_END)})",
+            flags=re.DOTALL,
+        )
+        if stack_pattern.search(content):
+            content = stack_pattern.sub(f"\\1\n{stack_md}\n\\3", content)
         else:
-            print(f"Warning: Failed to fetch repositories for org {org}.", file=sys.stderr)
+            print("[Warning] Stack section markers not found in README.md.", file=sys.stderr)
 
-    if not repos:
-        print("Failed to fetch any repositories.", file=sys.stderr)
-        sys.exit(1)
+        # 2. Update Stats section
+        stats_pattern = re.compile(
+            rf"({re.escape(cls.STATS_START)})(.*?)({re.escape(cls.STATS_END)})",
+            flags=re.DOTALL,
+        )
+        if stats_pattern.search(content):
+            content = stats_pattern.sub(f"\\1\n{stats_md}\n\\3", content)
+        else:
+            print("[Warning] Stats section markers not found in README.md.", file=sys.stderr)
 
-    language_bytes = fetch_language_bytes(repos, token)
-    stats_content = generate_stats_block(repos, token)
-    update_readme(stats_content, language_bytes)
+        with open(readme_path, "w", encoding="utf-8") as f:
+            f.write(content)
+
+        print(f"Successfully synchronized {readme_path}")
+
+
+# ------------------------------------------------------------------------------
+# Main Entry Point
+# ------------------------------------------------------------------------------
+
+def main() -> None:
+    workspace_dir = Path(__file__).resolve().parent.parent.parent
+    readme_path = workspace_dir / "README.md"
+
+    print("=" * 60)
+    print("Starting Profile README Synchronization Pipeline")
+    print(f"Workspace Directory: {workspace_dir}")
+    print("=" * 60)
+
+    # 1. Load configuration
+    config = ConfigManager.load(workspace_dir)
+
+    # 2. Initialize API client
+    api_client = GitHubApiClient(user_agent=f"{config.username}-stats-bot")
+
+    # 3. Aggregate statistics
+    aggregator = StatsAggregator(
+        client=api_client,
+        username=config.username,
+        organizations=config.organizations,
+    )
+
+    repos = aggregator.fetch_all_repositories()
+    print(f"Discovered {len(repos)} repositories (including organizations).")
+
+    lang_bytes = aggregator.aggregate_language_bytes(repos)
+    metrics_data = aggregator.fetch_metrics(repos)
+
+    # 4. Render Markdown
+    stack_markdown = MarkdownRenderer.render_stack_table(config.stack, lang_bytes)
+    stats_markdown = MarkdownRenderer.render_overview_table(config.overview, metrics_data)
+
+    # 5. Synchronize README
+    ReadmeSynchronizer.sync(readme_path, stack_markdown, stats_markdown)
+    print("Pipeline execution completed successfully!")
 
 
 if __name__ == "__main__":
