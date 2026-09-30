@@ -74,10 +74,6 @@ stack:
         proficiency: "Intermediate"
         status: "-"
 
-      - name: "GitHub Actions"
-        proficiency: "Beginner"
-        status: "Learning"
-
       - name: "Docker"
         proficiency: "Beginner"
         status: "Learning"
@@ -131,7 +127,7 @@ overview:
         label: "Issue comments"
 
   right_column:
-    header: "Community & Repositories"
+    header: "Community"
     metrics:
       - key: "sponsors"
         label: "Sponsors"

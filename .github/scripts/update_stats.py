@@ -143,7 +143,7 @@ class ConfigManager:
                 metrics=left_metrics,
             ),
             right_column=ColumnConfig(
-                header=right_data.get("header", "Community & Repositories"),
+                header=right_data.get("header", "Community"),
                 metrics=right_metrics,
             ),
         )
