@@ -22,6 +22,7 @@ except ImportError:
 # Data Models
 # ------------------------------------------------------------------------------
 
+
 @dataclass
 class StackItem:
     name: str
@@ -65,6 +66,7 @@ class AppConfig:
 # ------------------------------------------------------------------------------
 # Configuration Manager
 # ------------------------------------------------------------------------------
+
 
 class ConfigManager:
     """Handles loading and parsing configuration from YAML or JSON."""
@@ -160,10 +162,15 @@ class ConfigManager:
 # GitHub API Client
 # ------------------------------------------------------------------------------
 
+
 class GitHubApiClient:
     """Manages all authenticated requests to GitHub REST and GraphQL APIs."""
 
-    def __init__(self, token: Optional[str] = None, user_agent: str = "profile-stats-bot"):
+    def __init__(
+        self,
+        token: Optional[str] = None,
+        user_agent: str = "profile-stats-bot",
+    ):
         self.token = token or self._resolve_token()
         self.user_agent = user_agent
 
@@ -178,8 +185,12 @@ class GitHubApiClient:
         # Fallback to local gh CLI if available
         try:
             import subprocess
+
             proc = subprocess.run(
-                ["gh", "auth", "token"], capture_output=True, text=True, timeout=5
+                ["gh", "auth", "token"],
+                capture_output=True,
+                text=True,
+                timeout=5,
             )
             if proc.returncode == 0 and proc.stdout.strip():
                 return proc.stdout.strip()
@@ -208,7 +219,10 @@ class GitHubApiClient:
         except urllib.error.HTTPError as e:
             print(f"[API Error] HTTP {e.code} for URL: {url}", file=sys.stderr)
             if e.code == 403:
-                print("Warning: GitHub API rate limit reached or token lacks permission.", file=sys.stderr)
+                print(
+                    "Warning: GitHub API rate limit reached or token lacks permission.",
+                    file=sys.stderr,
+                )
             return None
         except Exception as e:
             print(f"[API Error] Failed to fetch {url}: {e}", file=sys.stderr)
@@ -216,7 +230,9 @@ class GitHubApiClient:
 
     def graphql(self, query: str, variables: Dict[str, Any]) -> Dict[str, Any]:
         if not self.token:
-            print("[GraphQL] Warning: No token provided for GraphQL API.", file=sys.stderr)
+            print(
+                "[GraphQL] Warning: No token provided for GraphQL API.", file=sys.stderr
+            )
             return {}
 
         res = self.request(
@@ -232,10 +248,16 @@ class GitHubApiClient:
 # Statistics Aggregator
 # ------------------------------------------------------------------------------
 
+
 class StatsAggregator:
     """Aggregates repositories, commits, language bytes, and community metrics."""
 
-    def __init__(self, client: GitHubApiClient, username: str, organizations: List[str]):
+    def __init__(
+        self,
+        client: GitHubApiClient,
+        username: str,
+        organizations: List[str],
+    ):
         self.client = client
         self.username = username
         self.organizations = organizations
@@ -366,6 +388,7 @@ class StatsAggregator:
 # Markdown Renderer
 # ------------------------------------------------------------------------------
 
+
 class MarkdownRenderer:
     """Renders clean, GitHub Flavored Markdown (GFM) tables."""
 
@@ -376,7 +399,9 @@ class MarkdownRenderer:
 
     @classmethod
     def render_stack_table(
-        cls, categories: List[StackCategory], language_bytes: Dict[str, int]
+        cls,
+        categories: List[StackCategory],
+        language_bytes: Dict[str, int],
     ) -> str:
         total_bytes = sum(language_bytes.values())
 
@@ -392,7 +417,9 @@ class MarkdownRenderer:
 
                 pct_col = "-"
                 if item.languages and total_bytes > 0:
-                    matched_bytes = sum(language_bytes.get(l, 0) for l in item.languages)
+                    matched_bytes = sum(
+                        language_bytes.get(l, 0) for l in item.languages
+                    )
                     if matched_bytes > 0:
                         pct = (matched_bytes / total_bytes) * 100
                         pct_col = f"{pct:.1f}%"
@@ -407,7 +434,9 @@ class MarkdownRenderer:
 
     @classmethod
     def render_overview_table(
-        cls, config: OverviewConfig, metrics_data: Dict[str, int]
+        cls,
+        config: OverviewConfig,
+        metrics_data: Dict[str, int],
     ) -> str:
         left = config.left_column
         right = config.right_column
@@ -449,6 +478,7 @@ class MarkdownRenderer:
 # README Synchronizer
 # ------------------------------------------------------------------------------
 
+
 class ReadmeSynchronizer:
     """Updates designated section blocks in the target README.md file."""
 
@@ -473,7 +503,10 @@ class ReadmeSynchronizer:
         if stack_pattern.search(content):
             content = stack_pattern.sub(f"\\1\n{stack_md}\n\\3", content)
         else:
-            print("[Warning] Stack section markers not found in README.md.", file=sys.stderr)
+            print(
+                "[Warning] Stack section markers not found in README.md.",
+                file=sys.stderr,
+            )
 
         # 2. Update Stats section
         stats_pattern = re.compile(
@@ -483,7 +516,10 @@ class ReadmeSynchronizer:
         if stats_pattern.search(content):
             content = stats_pattern.sub(f"\\1\n{stats_md}\n\\3", content)
         else:
-            print("[Warning] Stats section markers not found in README.md.", file=sys.stderr)
+            print(
+                "[Warning] Stats section markers not found in README.md.",
+                file=sys.stderr,
+            )
 
         with open(readme_path, "w", encoding="utf-8") as f:
             f.write(content)
@@ -494,6 +530,7 @@ class ReadmeSynchronizer:
 # ------------------------------------------------------------------------------
 # Main Entry Point
 # ------------------------------------------------------------------------------
+
 
 def main() -> None:
     workspace_dir = Path(__file__).resolve().parent.parent.parent
@@ -525,7 +562,9 @@ def main() -> None:
 
     # 4. Render Markdown
     stack_markdown = MarkdownRenderer.render_stack_table(config.stack, lang_bytes)
-    stats_markdown = MarkdownRenderer.render_overview_table(config.overview, metrics_data)
+    stats_markdown = MarkdownRenderer.render_overview_table(
+        config.overview, metrics_data
+    )
 
     # 5. Synchronize README
     ReadmeSynchronizer.sync(readme_path, stack_markdown, stats_markdown)
