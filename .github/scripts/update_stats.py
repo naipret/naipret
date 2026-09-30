@@ -215,7 +215,10 @@ class GitHubApiClient:
         req = urllib.request.Request(url, data=req_body, headers=headers)
         try:
             with urllib.request.urlopen(req, timeout=30) as resp:
-                return json.loads(resp.read().decode("utf-8"))
+                body = resp.read().decode("utf-8").strip()
+                if not body:
+                    return None
+                return json.loads(body)
         except urllib.error.HTTPError as e:
             print(f"[API Error] HTTP {e.code} for URL: {url}", file=sys.stderr)
             if e.code == 403:
@@ -356,6 +359,9 @@ class StatsAggregator:
         # Issue comments count
         issue_comments = self._fetch_issue_comments_count()
 
+        # Contributors count across repos (excluding current user)
+        contributors_count = self.fetch_contributors_count(repos)
+
         return {
             "commits": total_commits,
             "prs_opened": prs_opened,
@@ -363,11 +369,33 @@ class StatsAggregator:
             "issues_opened": issues_opened,
             "issue_comments": issue_comments,
             "sponsors": sponsors,
+            "contributors": contributors_count,
             "public_repos": public_repos,
             "private_repos": private_repos,
             "stars": total_stars,
             "forks": total_forks,
         }
+
+    def fetch_contributors_count(
+        self,
+        repos: List[Dict[str, Any]],
+    ) -> int:
+        contributors: set[str] = set()
+        non_forks = [r for r in repos if not r.get("fork", False)]
+        print(f"Counting contributors across {len(non_forks)} non-fork repositories...")
+
+        for repo in non_forks:
+            c_url = repo.get("contributors_url")
+            if not c_url:
+                continue
+            res = self.client.request(c_url)
+            if isinstance(res, list):
+                for contributor in res:
+                    login = contributor.get("login")
+                    if login and login.lower() != self.username.lower():
+                        contributors.add(login)
+
+        return len(contributors)
 
     def _fetch_total_commits_count(self, fallback: int) -> int:
         url = f"https://api.github.com/search/commits?q=author:{self.username}"
