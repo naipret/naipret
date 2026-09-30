@@ -11,29 +11,28 @@ Creator & Maintainer @ NAF Studio
 <!-- START_SECTION:stack -->
 | Category | Technologies | Proficiency | Status | Percentage |
 | :--- | :--- | :--- | :--- | :---: |
-| **Languages** | C | Intermediate | Deepening | 37.8% |
-|  | C++ | Intermediate | Deepening | 2.1% |
-|  | Java | Beginner | Learning | 42.9% |
-|  | Python | Intermediate | Deepening | 0.5% |
-|  | JavaScript | Beginner | Learning | 4.6% |
+| **Languages** | C | Intermediate | Deepening | 25.3% |
+|  | C++ | Intermediate | Deepening | 13.8% |
+|  | Java | Beginner | Learning | 22.3% |
+|  | Python | Intermediate | Deepening | 7.0% |
+|  | JavaScript | Beginner | Learning | 2.6% |
 |  | TypeScript | - | Planned | - |
-| **Frontend** | HTML | Intermediate | Deepening | 8.4% |
-|  | CSS | Beginner | Learning | 2.3% |
+| **Frontend** | HTML | Intermediate | Deepening | 6.2% |
+|  | CSS | Beginner | Learning | 1.5% |
 | **Backend** | Spring Boot | Beginner | Learning | - |
 | **Databases** | - | Beginner | Learning | - |
 | **DevOps** | Linux | Intermediate | Deepening | - |
 |  | Git | Intermediate | - | - |
 |  | GitHub | Intermediate | - | - |
-|  | GitHub Actions | Beginner | Learning | - |
-|  | Docker | Beginner | Learning | 0.2% |
+|  | Docker | Beginner | Learning | 0.1% |
 |  | Kubernetes | - | Planned | - |
-| **Build Tools** | GNU Make | Intermediate | - | 0.5% |
+| **Build Tools** | GNU Make | Intermediate | - | 0.4% |
 |  | CMake | Intermediate | - | - |
 |  | Maven | Beginner | Learning | - |
 |  | Gradle | - | Planned | - |
-| **Research** | LaTeX | Beginner | Learning | - |
+| **Research** | LaTeX | Beginner | Learning | 10.7% |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-30 06:49 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-30 07:08 UTC)*</sub>
 <!-- END_SECTION:stack -->
 
 ---
@@ -41,13 +40,13 @@ Creator & Maintainer @ NAF Studio
 ## Overview
 
 <!-- START_SECTION:stats -->
-| Activity | Value | Community & Repositories | Value |
+| Activity | Value | Community | Value |
 | :--- | :---: | :--- | :---: |
-| Commits | 1,724 | Sponsors | 0 |
+| Commits | 2,088 | Sponsors | 0 |
 | Pull requests opened | 18 | Public repositories | 16 |
-| Pull requests reviewed | 7 | Private repositories | 0 |
+| Pull requests reviewed | 7 | Private repositories | 13 |
 | Issues opened | 19 | Community stars | 2 |
-| Issue comments | 27 | Community forks | 3 |
+| Issue comments | 28 | Community forks | 3 |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-30 06:49 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-30 07:08 UTC)*</sub>
 <!-- END_SECTION:stats -->
