@@ -1,0 +1,145 @@
+user:
+  username: "naipret"
+  organizations:
+    - "naf-studio"
+
+stack:
+  - category: "Languages"
+    items:
+      - name: "C"
+        proficiency: "Intermediate"
+        status: "Deepening"
+        languages: ["C"]
+
+      - name: "C++"
+        proficiency: "Intermediate"
+        status: "Deepening"
+        languages: ["C++"]
+
+      - name: "Java"
+        proficiency: "Beginner"
+        status: "Learning"
+        languages: ["Java"]
+
+      - name: "Python"
+        proficiency: "Intermediate"
+        status: "Deepening"
+        languages: ["Python"]
+
+      - name: "JavaScript"
+        proficiency: "Beginner"
+        status: "Learning"
+        languages: ["JavaScript"]
+
+      - name: "TypeScript"
+        proficiency: "-"
+        status: "Planned"
+        languages: ["TypeScript"]
+
+  - category: "Frontend"
+    items:
+      - name: "HTML"
+        proficiency: "Intermediate"
+        status: "Deepening"
+        languages: ["HTML"]
+
+      - name: "CSS"
+        proficiency: "Beginner"
+        status: "Learning"
+        languages: ["CSS"]
+
+  - category: "Backend"
+    items:
+      - name: "Spring Boot"
+        proficiency: "Beginner"
+        status: "Learning"
+
+  - category: "Databases"
+    items:
+      - name: "-"
+        proficiency: "Beginner"
+        status: "Learning"
+
+  - category: "DevOps"
+    items:
+      - name: "Linux"
+        proficiency: "Intermediate"
+        status: "Deepening"
+
+      - name: "Git"
+        proficiency: "Intermediate"
+        status: "-"
+
+      - name: "GitHub"
+        proficiency: "Intermediate"
+        status: "-"
+
+      - name: "GitHub Actions"
+        proficiency: "Beginner"
+        status: "Learning"
+
+      - name: "Docker"
+        proficiency: "Beginner"
+        status: "Learning"
+        languages: ["Dockerfile"]
+
+      - name: "Kubernetes"
+        proficiency: "-"
+        status: "Planned"
+
+  - category: "Build Tools"
+    items:
+      - name: "GNU Make"
+        proficiency: "Intermediate"
+        status: "-"
+        languages: ["Makefile"]
+
+      - name: "CMake"
+        proficiency: "Intermediate"
+        status: "-"
+        languages: ["CMake"]
+
+      - name: "Maven"
+        proficiency: "Beginner"
+        status: "Learning"
+        languages: ["Maven POM", "XML"]
+
+      - name: "Gradle"
+        proficiency: "-"
+        status: "Planned"
+
+  - category: "Research"
+    items:
+      - name: "LaTeX"
+        proficiency: "Beginner"
+        status: "Learning"
+        languages: ["TeX", "LaTeX"]
+
+overview:
+  left_column:
+    header: "Activity"
+    metrics:
+      - key: "commits"
+        label: "Commits"
+      - key: "prs_opened"
+        label: "Pull requests opened"
+      - key: "prs_reviewed"
+        label: "Pull requests reviewed"
+      - key: "issues_opened"
+        label: "Issues opened"
+      - key: "issue_comments"
+        label: "Issue comments"
+
+  right_column:
+    header: "Community & Repositories"
+    metrics:
+      - key: "sponsors"
+        label: "Sponsors"
+      - key: "public_repos"
+        label: "Public repositories"
+      - key: "private_repos"
+        label: "Private repositories"
+      - key: "stars"
+        label: "Community stars"
+      - key: "forks"
+        label: "Community forks"
