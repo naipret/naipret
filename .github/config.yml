@@ -129,8 +129,8 @@ overview:
   right_column:
     header: "Community"
     metrics:
-      - key: "sponsors"
-        label: "Sponsors"
+      - key: "contributors"
+        label: "Contributors"
       - key: "public_repos"
         label: "Public repositories"
       - key: "private_repos"
