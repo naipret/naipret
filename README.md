@@ -11,14 +11,14 @@ Creator & Maintainer @ NAF Studio
 <!-- START_SECTION:stack -->
 | Category | Technologies | Proficiency | Status | Percentage |
 | :--- | :--- | :--- | :--- | :---: |
-| **Languages** | C | Intermediate | Deepening | 25.3% |
-|  | C++ | Intermediate | Deepening | 13.8% |
-|  | Java | Beginner | Learning | 22.3% |
-|  | Python | Intermediate | Deepening | 7.0% |
-|  | JavaScript | Beginner | Learning | 2.6% |
+| **Languages** | C | Intermediate | Deepening | 27.8% |
+|  | C++ | Intermediate | Deepening | 15.2% |
+|  | Java | Beginner | Learning | 24.5% |
+|  | Python | Intermediate | Deepening | 7.8% |
+|  | JavaScript | Beginner | Learning | 2.8% |
 |  | TypeScript | - | Planned | - |
-| **Frontend** | HTML | Intermediate | Deepening | 6.2% |
-|  | CSS | Beginner | Learning | 1.5% |
+| **Frontend** | HTML | Intermediate | Deepening | 6.8% |
+|  | CSS | Beginner | Learning | 1.7% |
 | **Backend** | Spring Boot | Beginner | Learning | - |
 | **Databases** | - | Beginner | Learning | - |
 | **DevOps** | Linux | Intermediate | Deepening | - |
@@ -30,9 +30,9 @@ Creator & Maintainer @ NAF Studio
 |  | CMake | Intermediate | - | - |
 |  | Maven | Beginner | Learning | - |
 |  | Gradle | - | Planned | - |
-| **Research** | LaTeX | Beginner | Learning | 10.7% |
+| **Research** | LaTeX | Beginner | Learning | 11.7% |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-30 07:39 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-10-01 04:54 UTC)*</sub>
 <!-- END_SECTION:stack -->
 
 ---
@@ -42,11 +42,11 @@ Creator & Maintainer @ NAF Studio
 <!-- START_SECTION:stats -->
 | Activity | Value | Community | Value |
 | :--- | :---: | :--- | :---: |
-| Commits | 2,092 | Contributors | 14 |
-| Pull requests opened | 18 | Public repositories | 16 |
+| Commits | 2,084 | Contributors | 14 |
+| Pull requests opened | 18 | Public repositories | 14 |
 | Pull requests reviewed | 7 | Private repositories | 13 |
 | Issues opened | 19 | Community stars | 2 |
-| Issue comments | 28 | Community forks | 3 |
+| Issue comments | 28 | Community forks | 2 |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-09-30 07:39 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-10-01 04:54 UTC)*</sub>
 <!-- END_SECTION:stats -->
