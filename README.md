@@ -11,13 +11,13 @@ Creator & Maintainer @ NAF Studio
 <!-- START_SECTION:stack -->
 | Category | Technologies | Proficiency | Status | Percentage |
 | :--- | :--- | :--- | :--- | :---: |
-| **Languages** | C | Intermediate | Deepening | 27.2% |
-|  | C++ | Intermediate | Deepening | 14.8% |
-|  | Java | Beginner | Learning | 26.3% |
-|  | Python | Intermediate | Deepening | 7.6% |
+| **Languages** | C | Intermediate | Deepening | 26.7% |
+|  | C++ | Intermediate | Deepening | 14.6% |
+|  | Java | Beginner | Learning | 25.9% |
+|  | Python | Intermediate | Deepening | 7.8% |
 |  | JavaScript | Beginner | Learning | 2.8% |
 |  | TypeScript | - | Planned | - |
-| **Frontend** | HTML | Intermediate | Deepening | 6.6% |
+| **Frontend** | HTML | Intermediate | Deepening | 6.5% |
 |  | CSS | Beginner | Learning | 1.6% |
 | **Backend** | Spring Boot | Beginner | Learning | - |
 | **Databases** | - | Beginner | Learning | - |
@@ -30,9 +30,9 @@ Creator & Maintainer @ NAF Studio
 |  | CMake | Intermediate | - | - |
 |  | Maven | Beginner | Learning | - |
 |  | Gradle | - | Planned | - |
-| **Research** | LaTeX | Beginner | Learning | 11.5% |
+| **Research** | LaTeX | Beginner | Learning | 11.3% |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-10-07 05:02 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-10-07 14:48 UTC)*</sub>
 <!-- END_SECTION:stack -->
 
 ---
@@ -42,11 +42,11 @@ Creator & Maintainer @ NAF Studio
 <!-- START_SECTION:stats -->
 | Activity | Value | Community | Value |
 | :--- | :---: | :--- | :---: |
-| Commits | 2,111 | Contributors | 14 |
-| Pull requests opened | 19 | Public repositories | 15 |
-| Pull requests reviewed | 7 | Private repositories | 13 |
+| Commits | 1,966 | Contributors | 14 |
+| Pull requests opened | 20 | Public repositories | 16 |
+| Pull requests reviewed | 7 | Private repositories | 11 |
 | Issues opened | 29 | Community stars | 2 |
 | Issue comments | 28 | Community forks | 2 |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-10-07 05:02 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-10-07 14:48 UTC)*</sub>
 <!-- END_SECTION:stats -->
