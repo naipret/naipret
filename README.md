@@ -17,8 +17,8 @@ Creator & Maintainer @ NAF Studio
 |  | Python | Intermediate | Deepening | 6.5% |
 |  | JavaScript | Beginner | Learning | 2.4% |
 |  | TypeScript | - | Planned | - |
-| **Frontend** | HTML | Intermediate | Deepening | 7.6% |
-|  | CSS | Beginner | Learning | 2.0% |
+| **Frontend** | HTML | Intermediate | Deepening | 7.7% |
+|  | CSS | Beginner | Learning | 1.9% |
 | **Backend** | Spring Boot | Beginner | Learning | - |
 | **Databases** | - | Beginner | Learning | - |
 | **DevOps** | Linux | Intermediate | Deepening | - |
@@ -32,7 +32,7 @@ Creator & Maintainer @ NAF Studio
 |  | Gradle | - | Planned | - |
 | **Research** | LaTeX | Beginner | Learning | 9.4% |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-10-28 04:44 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-10-29 04:56 UTC)*</sub>
 <!-- END_SECTION:stack -->
 
 ---
@@ -42,11 +42,11 @@ Creator & Maintainer @ NAF Studio
 <!-- START_SECTION:stats -->
 | Activity | Value | Community | Value |
 | :--- | :---: | :--- | :---: |
-| Commits | 2,136 | Contributors | 14 |
+| Commits | 2,145 | Contributors | 14 |
 | Pull requests opened | 46 | Public repositories | 23 |
 | Pull requests reviewed | 17 | Private repositories | 10 |
 | Issues opened | 37 | Community stars | 2 |
 | Issue comments | 38 | Community forks | 8 |
 
-<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-10-28 04:44 UTC)*</sub>
+<sub>*Automated synchronization via custom GitHub Actions workflow (Last updated: 2026-10-29 04:56 UTC)*</sub>
 <!-- END_SECTION:stats -->
